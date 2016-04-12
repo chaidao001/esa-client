@@ -1,0 +1,31 @@
+from domain.marketchange.MarketChange import MarketChange
+from domain.response import Response
+
+
+class MarketChangeMessage(Response):
+    def __init__(self, response):
+        super().__init__(response["op"])
+        self._clk = response["clk"]
+        self._pt = response["pt"]
+        if "mc" in response:
+            self._mc = [MarketChange(mc) for mc in (response["mc"])]
+        if "initialClk" in response:
+            self._initial_clk = response["initialClk"]
+        if "heartbeatMs" in response:
+            self._heartbeat_ms = response["heartbeatMs"]
+        if "ct" in response:
+            self._ct = response["ct"]
+        if "conflateMs" in response:
+            self._conflate_ms = response["conflateMs"]
+
+    @property
+    def initialClk(self):
+        return self._initial_clk
+
+    @property
+    def clk(self):
+        return self._clk
+
+    @property
+    def mc(self):
+        return self._mc

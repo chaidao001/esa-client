@@ -1,0 +1,610 @@
+{
+    "name": "CD5",
+    "description": "cd5 environment configuration",
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "cookbook_versions": {
+        "bf-aus-web": "= 0.0.0",
+        "bf-authentication-service": "= 0.0.0",
+        "bf-bsm-service": "= 0.0.0",
+        "bf-bts": "= 0.0.0",
+        "bf-exchange-desktop-site": "= 0.0.0",
+        "bf-exchange-mobile-site": "= 0.0.0",
+        "bf-fbr-service": "= 0.0.0",
+        "bf-fab": "= 0.0.0",
+        "bf-fcq-service": "= 0.0.0",
+        "bf-fpb": "= 0.0.0",
+        "bf-fixed-odds-service-bus": "= 0.0.0",
+        "bf-fixedodds-price-advisor": "= 0.0.0",
+        "bf-feed-acquisition-service": "= 0.0.0",
+        "bf-feed-transformation-engine": "= 0.0.0",
+        "bf-funds-service": "= 3.17.0",
+        "bf-etl-transformations": "= 0.0.0",
+        "bf-betfair-events-service": "= 0.0.0",
+        "bf-fmm-service": "= 0.0.0",
+        "bf-fobapi-application": "= 0.0.0",
+        "bf-games-web": "= 0.0.0",
+        "bf-gamex-api": "= 0.0.0",
+        "bf-gamesapi": "= 0.0.0",
+        "bf-gatewayservice": "= 0.0.0",
+        "bf-galaxyadaptorservice": "= 0.0.0",
+        "bf-gamesfeed-service": "= 0.0.0",
+        "bf-games-portal-service": "= 0.0.0",
+        "bf-odobo-account-link": "= 0.0.0",
+        "bf-identitysso": "= 0.0.0",
+        "bf-mobile-games-web": "= 0.0.0",
+        "bf-mobile-exchange-site": "= 0.0.0",
+        "bf-mobile-sports-site": "= 0.0.0",
+        "bf-promotions-hub": "= 0.0.0",
+        "bf-sfm-service": "= 0.0.0",
+        "bf-sports-site-web": "= 0.0.0",
+        "bf-sportsbook-web": "> 0.0.0",
+        "bf-wall-sportsbook": "= 0.0.0",
+        "bf-wall-gatewayproxy": "= 0.0.0",
+        "bf-wallet-service": "= 0.0.0",
+        "bf-timeform-web": "= 0.0.0",
+        "bf-traffic-advisor-service": "= 0.0.0",
+        "bf-localisation-api": "= 0.0.0",
+        "java": "= 0.0.0",
+        "bf-ems-static-client": "= 0.0.0",
+        "bf-user-messaging-service": "= 0.0.0",
+        "yum_package_verify": "= 0.0.0",
+        "activemq": "= 0.0.0",
+        "zookeeper": "= 0.0.0",
+        "bf-galaxyAdaptorService": "= 0.0.0",
+        "bf-splash-web": "= 0.0.0",
+        "bf-shared-site-components": "= 0.0.0",
+        "bf-web-operational-console": "= 0.0.0"
+
+    },
+    "default_attributes": {
+    "appdynamics": {
+            "controller_host": "pqalog01.pqa.ham.uk.betfair",
+            "enabled": "false"
+    },
+        "3rd-party-envs": [ "playtech-tartu", "openbet-cd5", "virtuefusion-stg" ],
+        "cdn": {
+            "gwb": {
+                "arcade": "",
+                "ars": "ars.sh.devqa.ro.betfair",
+                "default": "gamesweb.cd5.dev.betfair"
+            },
+            "mgw": {
+                "default": "marcade.cd5.dev.betfair",
+                "content": {
+                    "serverUri": "cd5csw001.dev.betfair:8080/content"
+                }
+            }
+        },
+        "db": {
+            "funding_casino": {
+                "host": ["devexcdb001-prodip1.dev.betfair"],
+                "host-vip": ["devexcdb001-prodip1.dev.betfair"],
+                "name": "CDDPTCG1"
+            },
+            "fundsservice": {
+                "host": "devexcdb001-prodip1.dev.betfair",
+                "name": "CDDUKTR5"
+            },
+            "fundssportex": {
+                "host": "devexcdb001-prodip1.dev.betfair",
+                "name": "CDDUKSP5"
+            },
+            "sip_psqf": {
+              "host": ["devexcdb001-prodip1.dev.betfair"],
+              "name": "CDDSOGE5",
+              "user": "access_sip_psqf",
+              "password": "access_sip_psqf"
+            },
+            "psid": {
+              "host":["devexcdb001-prodip1.dev.betfair"],
+              "name": "NLDSOGE1",
+              "user":"access_sip_psqf",
+              "password": "ACCESS_SIP_PSQF"
+            },
+            "sso_service": {
+                "host": ["devexcdb001-prodip1.dev.betfair"],
+                "hostfw": ["devexcdb001-prodip1.dev.betfair"],
+                "name": "CDDSMSS2"
+            },
+            "sso_service_gps": {
+                "host": ["devexcdb001-prodip1.dev.betfair"],
+                "name": "CDDSMSS2"
+            },
+            "games_registry": {
+                "host": ["devexcdb001-prodip1.dev.betfair"],
+                "name": "CDDPTCG1"
+            },
+            "exchange_games": {
+                "host": ["devexcdb001-prodip1.dev.betfair"],
+                "name": "CDNLDGAME1"
+            },
+            "trans_default": {
+                "name": "CDDUKSP5",
+                "host": "devexcdb001-prodip1.dev.betfair"
+            },
+            "trans_trade": {
+                "name": "CDDUKSP5",
+                "host": "devexcdb001-prodip1.dev.betfair"
+            },
+            "virtualsports": {
+                "host": "cd7sev003.dev.betfair",
+                "name": "source"
+            },
+            "web_plugin": {
+                "name": "CDDUKSP5",
+                "host": "devexcdb001-prodip1.dev.betfair",
+                "port": "1521"
+            }
+        },
+        "cluster": {
+            "xga": {
+                "tangosol": {
+                    "clusteraddress": "239.252.182.88",
+                    "clusterport": "23355",
+                    "ttl": "1"
+
+                }
+            },
+            "gfs": {
+                "tangosol": {
+                    "clusteraddress": "239.252.182.239",
+                    "mode": "dev"
+                }
+            }
+        },
+        "domains": {
+            "internal": "cd5.dev.betfair",
+            "internal_spain": "cd5.es.dev.betfair",
+            "internal_italy": "cd5.it.dev.betfair",
+            "international": "cd5.dev.betfair",
+            "italy": "cd5.it.dev.betfair",
+            "spain": "cd5.es.dev.betfair"
+        },
+        "domains_gps": [
+            "cd5.dev.betfair",
+            "cd5.it.dev.betfair",
+            "cd5.es.dev.betfair",
+            "betfair.com",
+            "betfair.net",
+            "app.es.betfair",
+            "app.it.betfair",
+            "it.app.betfair",
+            "app.betfair",
+            "be888.com",
+            "sel88.com",
+            "cat.be888.com",
+            "golf.be888.com",
+            "wolf.be888.com",
+            "pig.be888.com",
+            "car.be888.com",
+            "site.casino.betfair.com",
+            "www2.betfair.com",
+            "www3.betfair.com",
+            "www4.betfair.com",
+            "www5.betfair.com",
+            "www6.betfair.com",
+            "www7.betfair.com",
+            "www8.betfair.com",
+            "www9.betfair.com",
+            "www10.betfair.com",
+            "www11.betfair.com",
+            "www12.betfair.com",
+            "www13.betfair.com",
+            "www14.betfair.com",
+            "www15.betfair.com",
+            "www16.betfair.com",
+            "www111.betfair.com",
+            "www222.betfair.com",
+            "www333.betfair.com",
+            "www-1.betfair.com",
+            "www-2.betfair.com",
+            "betfair.it",
+            "betfair.es",
+            "betfair.eu",
+            "betfaironline.eu",
+            "w-con.betfair.com"
+        ],
+        "env": "dev",
+        "sonicmq": {
+            "broker": "tcp://cd5apw001.dev.betfair:2506",
+            "ssl_enabled": false,
+            "username": "itsb",
+            "password": "iepuVai9"
+        },
+        "storage": {
+            "couchbase": {
+                "clusters": "cd5gsp001.dev.betfair:11211,cd5gsp002.dev.betfair:11211"
+            }
+        },
+        "eventemitter": {
+            "username": "eventemitter",
+            "password": "Mi6x8dp0",
+            "topic": "[[GGS_Group_cd7]]customer.EventEmitter",
+            "hosts": ["cd5apw001.dev.betfair:2506", "cd5apw001.dev.betfair:2506", "cd5apw001.dev.betfair:2506", "cd5apw001.dev.betfair:2506"]
+        },
+        "deposit_jms": {
+            "username": "ggs",
+            "password": "8zJ2apn5"
+        },
+        "funds_jms": {
+            "username": "sipadaptor",
+            "password": "p5XyGQYn"
+        },
+        "self_exclusion_jms": {
+            "username": "ggs",
+            "password": "8zJ2apn5"
+        },
+        "cas_jms": {
+            "username": "sipadaptor",
+            "password": "p5XyGQYn",
+            "topic": "[[GGS_Group_cd5_CAS]]customer.account.CreatedAccount"
+        },
+        "games": {
+            "shared_secret": "12345678901234567890123456789012"
+        },
+        "kafka": {
+            "brokers": "cd5zoo001.dev.betfair:9092,cd5zoo002.dev.betfair:9092,cd5zoo003.dev.betfair:9092"
+        },
+        "lus": {
+            "partition": "_lus1._tcp",
+            "domain": "lus.stg.betfair",
+            "group": "cd7",
+            "zone_partition": "_lus-dns._tcp",
+            "publisher": {
+                "entry": {
+                    "property": {
+                        "jurisdiction": "uk",
+                        "datacentre": "stg.uk"
+                    }
+                }
+            }
+        },
+        "vip": {
+            "aan": {
+                "host": "api.cd5.dev.betfair"
+            },
+            "aca": {
+                "host": "capi.cd5.dev.betfair",
+                "service_url": "http://capi.cd7.dev.betfair/alfresco/service/capi",
+                "monitor_url": "http://capi.cd7.dev.betfair/alfresco/service/capi/configuration?store=mantis-config-live&conftype=webping"
+            },
+            "akm": {
+                "host": "akm.cd5.dev.betfair",
+                "port": "80",
+                "monitor_url": "http://akm.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "ala": {
+                "host": "hamdev854.aws.dev.ham.uk.betfair",
+                "port": "8080"
+            },
+            "amt": {
+                "host": "amt.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://amt.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "ans": {
+                "host": "cd5ans001.dev.betfair",
+                "port": "8443",
+                "service_url": "https://cd5ans001.dev.betfair:8443/AuthenticationService/v1.2",
+                "monitor_url": "http://cd5ans001.dev.betfair:8080/healthcheck/v2.0/summary"
+            },
+            "api": {
+                "host": "api.cd5.dev.betfair"
+            },
+            "ars": {
+                "host": "assets.cd5.dev.betfair",
+                "service_url": "http://assets.cd5.dev.betfair"
+            },
+            "acs": {
+                "host": "account-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "atz": {
+                "host": "authorization-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://authorization-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "bls": {
+                "host": "balance-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "capi": {
+                "host": "capi.cache.cd5.dev.betfair",
+                "assets_url" : "http://assets.cd5.dev.betfair/",
+                "monitor_url" : "http://cat.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "cas": {
+                "host": "cd5cas001.dev.betfair",
+                "port": "8443",
+                "ssl_host": "cd5cas001.dev.betfair",
+                "monitor_url": "http://cd5cas001.dev.betfair:8080/healthcheck/v2.0/summary",
+                "v3_0": {
+                    "url": "https://ccd5cas001.dev.betfair:8334/AccountService/v3.0"
+                },
+                "v4_0": {
+                    "url": "https://cd5cas001.dev.betfair:8443/AccountService/v4.0"
+                }
+
+            },
+            "cat": {
+                "host": "cat.cd5.dev.betfair",
+                "service_url": "http://cat.cd5.dev.betfair",
+                "monitor_url": "http://cat.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "cbr": {
+                "uk_host": "uk-api.cd5.dev.betfair",
+                "aus_host": "aus-api.cd5.dev.betfair",
+                "monitor_url": "http://uk-api.cd5.dev.betfair/www/healthcheck/v2.0/summary",
+                "monitor_url_aus": "http://aus-api.cd5.dev.betfair/www/healthcheck/v2.0/summary"
+            },
+            "compliance": {
+                "host": "compliance-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "cro": {
+                "host": "cd5cro-b71b26.dev.betfair",
+                "host_monitor": "cd5cro-b71b26.dev.betfair",
+                "port": "8443",
+                "monitor_url": "http://cd5cro-b71b26.dev.betfair:8080/healthcheck/v2.0/summary"
+            },
+            "cxs": {
+                "host": "currency-exchange-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://currency-exchange-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "esx": {
+                "host": "exclusion-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://exclusion-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "etx": {
+                "host": "uk-api.cd5.dev.betfair",
+                "port": "80",
+                "monitor_url": "http://uk-api.cd5.dev.betfair:80/www/healthcheck/v2.0/summary"
+            },
+            "fbr": {
+                "host": "fbr-service.cd5.dev.betfair",
+                "service_url": "https://fbr-service.cd5.dev.betfair/api",
+                "monitor_url": "http://fbr-service.cd5.dev.betfair/www/healthcheck/v2.0/summary"
+            },
+            "fmm": {
+                "host": "fmm-service.cd5.dev.betfair",
+                "monitor_url": "http://fmm-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "fob": {
+                "host": "uk-api.cd5.dev.betfair",
+                "monitor_url": "http://uk-api.cd5.dev.betfair/www/healthcheck/v2.0/summary"
+            },
+            "fps": {
+                "host": "fraud-prevention-service.cd5.dev.betfair",
+                "monitor_url": "http://fraud-prevention-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "fss": {
+                "host": "funds-service.cd5.dev.betfair",
+                "monitor_url": "http://funds-service.cd5.dev.betfair/healthcheck/v2.0/summary",
+                "port": "443",
+                "service_url": "https://funds-service.cd5.dev.betfair:443/FundsService/v2.0",
+                "dark" : {
+                    "host": "cd5fss002.dev.betfair",
+                    "port": "8443"
+                }
+            },
+            "fts": {
+                "host": "funds-transfer-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "fxs": {
+                "host": "forex-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "gfs": {
+                "host": "gamesfeedservice.cd5.dev.betfair"
+            },
+            "ggs": {
+                "host": "gateway-service.cd5.dev.betfair",
+                "port": "443",
+                "service_url": "https://gateway-service.cd5.dev.betfair:443/gateway/service/Gateway"
+            },
+            "gap": {
+                "host": "gamesapi.cd5.dev.betfair",
+                "port": "443"
+            },
+            "gas": {
+                "host": "pt-galaxy-adapter.cd5.dev.betfair",
+                "port": "443"
+            },
+            "globalapi": {
+                "host": "https://api.cd5.dev.betfair/global/v3/BFGlobalService"
+            },
+            "gms": {
+                "host": "cd5gms.dev-services.betfair",
+                "port": "80"
+            },
+            "gps": {
+                "host": "service.gamesportal.cd5.dev.betfair",
+                "port": "443"
+            },
+            "iss": {
+                "host": "cd5iss001.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://cd5iss001.dev.betfair:8080/healthcheck/v2.0/summary"
+            },
+            "kse": {
+                "host": "cd5kse001.dev.betfair",
+                "port": "8080"
+            },
+            "lbr": {
+                "host": "uk-api.cd5.dev.betfair",
+                "monitor_url": "http://uk-api.cd5.dev.betfair/www/healthcheck/v2.0/summary"
+            },
+            "mkel": {
+                "ssl_host": "marketing-event-listener.cd5.dev.betfair",
+                "host": "leaderboards.cd7.dev.betfair",
+                "port": "443"
+            },
+            "mpm": {
+                "host": "mobile-push-msgr.cd7.dev.betfair",
+                "monitor_url": "http://mobile-push-msgr.cd7.dev.betfair/healthcheck/v2.0/summary",
+                "port": "80"
+            },
+            "nss": {
+                "host": "push-subscription-retriever.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://nsscd5-vip.dev-services.betfair/healthcheck/v2.0/summary"
+            },
+            "mps": {
+                "host": "marketingpreferencesservice.cd5.dev.betfair",
+                "service_url": "https://marketingpreferencesservice.cd5.dev.betfair",
+                "monitor_url": "http://marketingpreferencesservice.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "pgda": {
+                "host": "pgda-services.cd5.dev.betfair",
+                "port": "443",
+                "service_url": "https://pgda-services.cd5.dev.betfair:443/SogeiPGDAService/v1.0"
+            },
+            "pol": {
+                "host": "policy-service.cd5.dev.betfair",
+                "port": "443",
+                "service_url": "https://policy-service.cd5.dev.betfair:443/PolicyService/v1.0",
+                "monitor_url": "http://policy-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "profile": {
+                "host": "profile-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "pts": {
+                "service_url": "https://points-service.cd5.devqa.ro.betfair:443/points/service/Points"
+            },
+            "pys": {
+                "host": "payment-service.cd5.dev.betfair",
+                "monitor_url": "http://payment-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "pyw": {
+                "host": "myfunds.cd5.dev.betfair"
+            },
+            "ras": {
+                "host": "regulator-adapter-service.cd5.dev.betfair",
+                "port": "443",
+                "service_url": "https://regulator-adapter-service.cd5.dev.betfair:443/SipAdapterService/v1.0/",
+                "monitor_url": "http://regulator-adapter-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "responsibility": {
+                "host": "responsibility-service.cd5.dev.betfair",
+                "port": "443"
+            },
+            "rgs": {
+                "host": "registration-service.cd5.dev.betfair",
+                "service_url": "https://registration-service.cd5.dev.betfair:443/RegistrationService/v1.0",
+                "monitor_url": "http://registration-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "rws": {
+                "host": "cd5rws001.dev.betfair",
+                "port": "8080",
+                "monitor_url": "http://cd5rws001.dev.betfair:8080/healthcheck/v2.0/summary"
+            },
+            "sms": {
+                "host": "session-management-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://session-management-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "ssc": {
+                "host": "ssc.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://ssc.cd5.dev.betfair/webping"
+            },
+            "ssm": {
+                "host": "session-management-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://session-management-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "sso": {
+                "host": "identitysso.cd5.dev.betfair"
+            },
+            "ssolite": {
+                "host": "broker.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://broker.cd5.dev.betfair/global-exchange-admin-api/Ping.jsp"
+            },
+            "ums": {
+                "host": "user-messaging-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://user-messaging-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "ura": {
+                "host": "ura.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://ura.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "usp": {
+                "host": "usp.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://usp.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "was": {
+                "host": "wallet-service.cd5.dev.betfair",
+                "port": "443",
+                "monitor_url": "http://wallet-service.cd5.dev.betfair/healthcheck/v2.0/summary"
+            },
+            "xga": {
+                "host": "api.games.cd5.dev.betfair",
+                "monitor_url": "https://api.games.cd5.dev.betfair/rest/v1/ping"
+            }
+        },
+        "xes": {
+            "brokers": "cd5exg-b7783c.dev.betfair:9092,cd5exg-b7783d.dev.betfair:9092,cd5exg-b7783e.dev.betfair:9092",
+            "zookeeper": "cd5zoo001.dev.betfair,cd5zoo002.dev.betfair,cd5zoo003.dev.betfair" 
+        },
+        "games_cacheserver": {
+            "tangosol": {
+                "clusteraddress": "239.252.182.82",
+                "clusterport": "23280",
+                "ttl": "1"
+            }
+        },
+        "sessioncache": {
+            "tangosol": {
+                "cluster": {
+                    "name": "sessioncache",
+                    "address": "239.252.182.154",
+                    "port": "61312"
+                },
+                "ttl": "16",
+                "mode": "dev"
+            }
+        },
+        "ssl": {
+            "truststore": {
+                "password": "howmanybets",
+                "file": "/etc/bf-truststores/betfair-truststore.jks",
+                "type": "jks"
+            }
+        }
+    },
+    "customer_readonly_service" :{
+       "usemocks":"true"
+     },
+    "override_attributes": {
+        "gatewayservice": {
+            "eventemitter": {
+                "password": "Mi6x8dp0"
+            },
+            "cas_jms": {
+                "password": "p5XyGQYn"
+            },
+            "deposit_jms": {
+                "password": "8zJ2apn5"
+            },
+            "funds_jms": {
+                "password": "p5XyGQYn"
+            }
+        },
+        "playtechgalaxyadapter": {
+            "log": {
+                "default": {
+                    "level": "INFO"
+                }
+            }
+        }
+    }
+}
