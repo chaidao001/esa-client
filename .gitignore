@@ -1,0 +1,11 @@
+.idea
+log
+
+# Python cache
+__pycache__
+
+# Config file
+conf/config.ini
+
+# Mac stuff
+.DS_Store
