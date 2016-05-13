@@ -1,9 +1,6 @@
-import configparser
 import json
 
 import requests
-
-config_file = 'conf/config.ini'
 
 
 def serialise(message):
@@ -32,9 +29,3 @@ def get_new_session(username, password, app_key):
     headers = {"Accept": "application/json", "X-Application": app_key}
     req = requests.post(url, headers=headers, data=data)
     return req.json()['token']
-
-
-def get_default_config():
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    return config['DEFAULT']

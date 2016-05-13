@@ -3,8 +3,8 @@ import logging
 import socket
 import ssl
 import threading
-
 from time import sleep
+
 from Cache import Cache
 from domain.request import Request
 from domain.request.Authentication import Authentication
@@ -18,11 +18,13 @@ from utils.utils import serialise, format_json
 
 
 class EsaClient:
-    def __init__(self, host: str, port: int, app_key: str, session_token):
+    def __init__(self, host: str, port: int, app_key: str, session_token: str, heartbeat_interval_second: int):
         self._host = host
         self._port = int(port)
         self._app_key = app_key
         self._session_token = session_token
+        self._heartbeat_interval_second = heartbeat_interval_second
+
         self._cache = Cache()
         self._conn = None
         self._connection_id = None
@@ -98,7 +100,7 @@ class EsaClient:
     def _send_heartbeats(self):
         while self._conn:
             self.heartbeat()
-            sleep(1)
+            sleep(self._heartbeat_interval_second)
 
         logging.info("Stopping SendThread.")
 

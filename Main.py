@@ -2,22 +2,24 @@ import logging
 import logging.config
 
 from EsaClient import EsaClient
-from utils.utils import get_default_config, get_new_session
+from utils.Config import Config
+from utils.utils import get_new_session
 
 
 def main():
     # loading configs
-    config = get_default_config()
+    config = Config()
 
     # configuring logger
-    logging.config.fileConfig(config.get('log_conf'))
+    logging.config.fileConfig(config.log_conf)
+    logging.info("Configs:\n%s" % config)
 
-    app_key = config.get('app_key')
+    app_key = config.app_key
 
     logging.info("Requesting session token")
-    session_token = get_new_session(config.get('username'), config.get('password'), app_key)
+    session_token = get_new_session(config.username, config.password, app_key)
 
-    client = EsaClient(config.get('host'), config.get('port'), app_key, session_token)
+    client = EsaClient(config.host, config.port, app_key, session_token, config.heartbeat_interval_second)
     client.init()
 
 
