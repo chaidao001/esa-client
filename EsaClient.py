@@ -18,7 +18,6 @@ from utils.utils import serialise, format_json
 
 
 class EsaClient:
-
     def __init__(self, host: str, port: int, app_key: str, session_token):
         self._host = host
         self._port = int(port)
