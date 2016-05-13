@@ -19,8 +19,6 @@ def main():
 
     client = EsaClient(config.get('host'), config.get('port'), app_key, session_token)
     client.init()
-    client.authenticate()
-    client.subscribe(["1.123734445"])
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ class MarketChangeMessage(Response):
             self._conflate_ms = response["conflateMs"]
 
     @property
-    def initialClk(self):
+    def initial_clk(self):
         return self._initial_clk
 
     @property
