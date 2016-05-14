@@ -48,6 +48,7 @@ class EsaClient:
     def _stop_recv_threads(self):
         logging.info("Trying to stop %s" % self._recv_thread.name)
         self._conn = None
+        self._connection_id = None
 
     def _start_recv(self):
         logging.info('Starting to receive messages')
@@ -156,6 +157,10 @@ class EsaClient:
                 conn = ssl.wrap_socket(conn)
             self._conn = conn
             self._start_recv()
+
+            # wait until connection is established
+            while not self._connection_id:
+                sleep(1)
         except socket.error as e:
             logging.error(e)
             exit(1)

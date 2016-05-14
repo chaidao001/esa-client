@@ -2,4 +2,4 @@ logging on different files
 
 collect data
 
-reconnect when disconnected (i.e. when _conn = None)
+starting sending heartbeats after authentication
