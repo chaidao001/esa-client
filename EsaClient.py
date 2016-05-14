@@ -74,9 +74,9 @@ class EsaClient:
             try:
                 packet = (self._conn.recv(size)).decode()
             except socket.error as e:
-                logging.error(e)
-                self._conn = None
-                return
+                logging.warning("Error during receiving: %s" % e)
+                received_message = ''
+                break
 
             received_message += packet
 
