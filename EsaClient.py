@@ -59,12 +59,21 @@ class EsaClient:
         logging.info('Starting to send heartbeats')
 
         while True:
-            while self._conn:
-                self.heartbeat()
-                sleep(self._heartbeat_interval_second)
+            try:
+                while self._conn:
+                    self.heartbeat()
+                    sleep(self._heartbeat_interval_second)
 
-            logging.info("Stopped sending.")
-            self._reconnect_and_auth()
+                logging.info("Stopped sending.")
+                self._reconnect_and_auth()
+            except KeyboardInterrupt:
+                logging.warning("KeyboardInterrupt.  Exiting...")
+
+                self._stop_recv_threads()
+                while self._recv_thread.is_alive():
+                    sleep(1)
+
+                exit(1)
 
     def _close_socket(self):
         try:
@@ -96,7 +105,10 @@ class EsaClient:
             received_message += packet
 
         if received_message is not '':
-            return json.loads(received_message)
+            try:
+                return json.loads(received_message)
+            except Exception as e:
+                logging.warning("Failed to deserialise message '{}' because: {}".format(received_message, e))
         else:
             logging.warning("Connection closed.")
             self._stop_recv_threads()
