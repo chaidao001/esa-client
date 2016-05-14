@@ -41,15 +41,29 @@ class EsaClient:
         self.connect()
         self.authenticate()
 
+    def _reconnect_and_auth(self):
+        logging.info("Re-establishing connection...")
+        self.init()
+
+    def _stop_recv_threads(self):
+        logging.info("Trying to stop %s" % self._recv_thread.name)
+        self._conn = None
+
     def _start_recv(self):
         logging.info('Starting to receive messages')
-        self.recvThread = threading.Thread(name="RecvThread", target=self._receive_requests)
-        self.recvThread.start()
+        self._recv_thread = threading.Thread(name="RecvThread", target=self._receive_requests)
+        self._recv_thread.start()
 
     def _start_send(self):
-        logging.info('Starting to send messages')
-        self.sendThread = threading.Thread(name="SendThread", target=self._send_heartbeats)
-        self.sendThread.start()
+        logging.info('Starting to send heartbeats')
+
+        while True:
+            while self._conn:
+                self.heartbeat()
+                sleep(self._heartbeat_interval_second)
+
+            logging.info("Stopped sending.")
+            self._reconnect_and_auth()
 
     def _close_socket(self):
         try:
@@ -84,25 +98,18 @@ class EsaClient:
             return json.loads(received_message)
         else:
             logging.warning("Connection closed.")
-            self._conn = None
+            self._stop_recv_threads()
 
     def _receive_requests(self):
         while self._conn:
             self._receive_request()
 
-        logging.info("Stopping RecvThread.")
+        logging.info("Stopped receiving.")
 
     def _receive_request(self):
         message = self._recv()
         if message:
             self._process_response(message)
-
-    def _send_heartbeats(self):
-        while self._conn:
-            self.heartbeat()
-            sleep(self._heartbeat_interval_second)
-
-        logging.info("Stopping SendThread.")
 
     def _send_request(self, request: Request):
         if request:
@@ -122,7 +129,8 @@ class EsaClient:
             logging.info("Received: %s", response)
 
             if response.connection_closed:
-                self._conn = None
+                self._stop_recv_threads()
+
         elif op == "mcm":
             response = MarketChangeMessage(message)
 
