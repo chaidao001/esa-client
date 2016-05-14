@@ -3,3 +3,5 @@ logging on different files
 collect data
 
 starting sending heartbeats after authentication
+
+add shutdown hook if possible
