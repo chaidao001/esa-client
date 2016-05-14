@@ -1,6 +1,5 @@
-logging:
-different files
-
-print at the same line
+logging on different files
 
 collect data
+
+reconnect when disconnected (i.e. when _conn = None)
