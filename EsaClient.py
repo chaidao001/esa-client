@@ -32,6 +32,8 @@ class EsaClient:
         self._clk = None
         self._market_filter = MarketFilter()
 
+        self._recv_thread = threading.Thread(name="RecvThread", target=self._receive_requests)
+
     def init(self):
         logging.info('Initialising ESA client')
         self._connect_and_auth()
@@ -51,7 +53,6 @@ class EsaClient:
 
     def _start_recv(self):
         logging.info('Starting to receive messages')
-        self._recv_thread = threading.Thread(name="RecvThread", target=self._receive_requests)
         self._recv_thread.start()
 
     def _start_send(self):
