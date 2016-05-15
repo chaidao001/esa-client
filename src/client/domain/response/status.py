@@ -1,7 +1,7 @@
-from src.client.domain.response import Response
+from src.client.domain.response import response
 
 
-class Status(Response):
+class Status(response):
     def __init__(self, response):
         super().__init__(response["op"])
         self._status_code = response["statusCode"]

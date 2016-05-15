@@ -6,7 +6,7 @@ import threading
 from time import sleep
 
 from src.client.cache.cache import Cache
-from src.client.domain.request import Request
+from src.client.domain.request import request
 from src.client.domain.request.authentication import Authentication
 from src.client.domain.request.heartbeat import Heartbeat
 from src.client.domain.request.marketFilter import MarketFilter
@@ -126,7 +126,7 @@ class EsaClient:
         if message:
             self._process_response(message)
 
-    def _send_request(self, request: Request):
+    def _send_request(self, request: request):
         if request:
             message = serialise(request)
             logging.info("Sending: %s", message)

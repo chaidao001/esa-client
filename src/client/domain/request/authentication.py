@@ -1,9 +1,9 @@
 from pkg_resources import iteritems
 
-from src.client.domain.request import Request
+from src.client.domain.request import request
 
 
-class Authentication(Request):
+class Authentication(request):
     def __init__(self, app_key, session):
         super().__init__()
         self._op = "authentication"

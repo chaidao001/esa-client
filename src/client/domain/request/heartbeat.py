@@ -1,7 +1,7 @@
-from src.client.domain.request import Request
+from src.client.domain.request import request
 
 
-class Heartbeat(Request):
+class Heartbeat(request):
     def __init__(self):
         super().__init__()
         self._op = "heartbeat"
