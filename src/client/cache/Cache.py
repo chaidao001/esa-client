@@ -1,4 +1,4 @@
-from src.client.domain.marketchange import MarketChange
+from src.client.domain.marketchange import marketchange
 from src.client.utils.utils import format_value
 
 
@@ -13,7 +13,7 @@ class Cache:
             else:
                 self._update_market(market_change)
 
-    def _update_market(self, market_change: MarketChange):
+    def _update_market(self, market_change: marketchange):
         self._markets[market_change.id].update(market_change)
 
     def formatted_string(self):

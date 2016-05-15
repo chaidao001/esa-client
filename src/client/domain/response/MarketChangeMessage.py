@@ -1,4 +1,4 @@
-from src.client.domain.marketchange.MarketChange import MarketChange
+from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.domain.response import Response
 
 

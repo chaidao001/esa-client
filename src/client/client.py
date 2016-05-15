@@ -5,15 +5,15 @@ import ssl
 import threading
 from time import sleep
 
-from src.client.cache.Cache import Cache
+from src.client.cache.cache import Cache
 from src.client.domain.request import Request
-from src.client.domain.request.Authentication import Authentication
-from src.client.domain.request.Heartbeat import Heartbeat
-from src.client.domain.request.MarketFilter import MarketFilter
-from src.client.domain.request.Subscription import Subscription
-from src.client.domain.response.Connection import Connection
-from src.client.domain.response.MarketChangeMessage import MarketChangeMessage
-from src.client.domain.response.Status import Status
+from src.client.domain.request.authentication import Authentication
+from src.client.domain.request.heartbeat import Heartbeat
+from src.client.domain.request.marketFilter import MarketFilter
+from src.client.domain.request.subscription import Subscription
+from src.client.domain.response.connection import Connection
+from src.client.domain.response.marketchangemessage import MarketChangeMessage
+from src.client.domain.response.status import Status
 from src.client.utils.utils import serialise, format_json
 
 
