@@ -1,8 +1,8 @@
+from client.domain.response import Response
 from src.client.domain.marketchange.marketchange import MarketChange
-from src.client.domain.response import response
 
 
-class MarketChangeMessage(response):
+class MarketChangeMessage(Response):
     def __init__(self, response):
         super().__init__(response["op"])
         self._clk = response["clk"]

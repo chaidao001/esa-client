@@ -5,16 +5,16 @@ import ssl
 import threading
 from time import sleep
 
-from src.client.cache.cache import Cache
-from src.client.domain.request import request
-from src.client.domain.request.authentication import Authentication
-from src.client.domain.request.heartbeat import Heartbeat
-from src.client.domain.request.marketfilter import MarketFilter
-from src.client.domain.request.subscription import Subscription
-from src.client.domain.response.connection import Connection
-from src.client.domain.response.marketchangemessage import MarketChangeMessage
-from src.client.domain.response.status import Status
-from src.client.utils.utils import serialise, format_json
+from client.cache.cache import Cache
+from client.domain.request.authentication import Authentication
+from client.domain.request.heartbeat import Heartbeat
+from client.domain.request.marketfilter import MarketFilter
+from client.domain.request.request import Request
+from client.domain.request.subscription import Subscription
+from client.domain.response.connection import Connection
+from client.domain.response.marketchangemessage import MarketChangeMessage
+from client.domain.response.status import Status
+from client.utils.utils import serialise, format_json
 
 
 class EsaClient:
@@ -126,7 +126,7 @@ class EsaClient:
         if message:
             self._process_response(message)
 
-    def _send_request(self, request: request):
+    def _send_request(self, request: Request):
         if request:
             message = serialise(request)
             logging.info("Sending: %s", message)

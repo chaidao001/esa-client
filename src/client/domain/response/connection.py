@@ -1,7 +1,7 @@
-from src.client.domain.response import response
+from client.domain.response import Response
 
 
-class Connection(response):
+class Connection(Response):
     def __init__(self, response):
         super().__init__(response["op"])
         self._connection_id = response["connectionId"]

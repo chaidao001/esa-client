@@ -1,9 +1,9 @@
 from pkg_resources import iteritems
 
-from src.client.domain.request import request
+from client.domain.request.request import Request
 
 
-class Subscription(request):
+class Subscription(Request):
     def __init__(self):
         super().__init__()
         self._op = "marketSubscription"
