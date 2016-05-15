@@ -5,16 +5,16 @@ import ssl
 import threading
 from time import sleep
 
-from Cache import Cache
-from domain.request import Request
-from domain.request.Authentication import Authentication
-from domain.request.Heartbeat import Heartbeat
-from domain.request.MarketFilter import MarketFilter
-from domain.request.Subscription import Subscription
-from domain.response.Connection import Connection
-from domain.response.MarketChangeMessage import MarketChangeMessage
-from domain.response.Status import Status
-from utils.utils import serialise, format_json
+from client.cache.Cache import Cache
+from client.domain.request import Request
+from client.domain.request.Authentication import Authentication
+from client.domain.request.Heartbeat import Heartbeat
+from client.domain.request.MarketFilter import MarketFilter
+from client.domain.request.Subscription import Subscription
+from client.domain.response.Connection import Connection
+from client.domain.response.MarketChangeMessage import MarketChangeMessage
+from client.domain.response.Status import Status
+from client.utils.utils import serialise, format_json
 
 
 class EsaClient:
@@ -135,7 +135,7 @@ class EsaClient:
 
         if op == "connection":
             response = Connection(message)
-            self._connection_id = response.connectionId
+            self._connection_id = response.connection_id
             logging.info("Connection has been established with ID %s", self._connection_id)
         elif op == "status":
             response = Status(message)

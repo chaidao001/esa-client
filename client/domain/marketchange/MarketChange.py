@@ -1,8 +1,8 @@
-from domain.marketchange.MarketDefinition import MarketDefinition
-from domain.marketchange.RunnerChange import RunnerChange
+from client.domain.marketchange.MarketDefinition import MarketDefinition
+from client.domain.marketchange.RunnerChange import RunnerChange
 
 
-class MarketChange():
+class MarketChange:
     def __init__(self, response):
         self._id = response["id"]
         if "rc" in response:
@@ -19,7 +19,7 @@ class MarketChange():
             for runner_id in market_change.rc:
                 self.rc[runner_id].update(market_change.rc[runner_id])
         if hasattr(market_change, "marketDef"):
-            self._market_definition = market_change.marketDef
+            self._market_definition = market_change.market_def
         if hasattr(market_change, "tv"):
             self._tv = market_change.tv
 
@@ -36,7 +36,7 @@ class MarketChange():
         return self._img
 
     @property
-    def marketDef(self):
+    def market_def(self):
         return self._market_definition
 
     @property

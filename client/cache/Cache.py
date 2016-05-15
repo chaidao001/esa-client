@@ -1,5 +1,5 @@
-from domain.marketchange import MarketChange
-from utils.utils import format_value
+from client.domain.marketchange import MarketChange
+from client.utils.utils import format_value
 
 
 class Cache:
@@ -22,14 +22,14 @@ class Cache:
         result = ''
 
         for marketId, market in self._markets.items():
-            market_status = market.marketDef.status
+            market_status = market.market_def.status
 
             result += "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
 
             if market_status == "CLOSED":
                 continue
 
-            runners = market.marketDef.runners
+            runners = market.market_def.runners
             runner_changes = market.rc
 
             for runner in runners:

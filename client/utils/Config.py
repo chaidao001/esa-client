@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 class Config:
     def __init__(self):
-        self.config_file = 'conf/config.ini'
+        self.config_file = "conf/config.ini"
 
         config = configparser.ConfigParser()
         config.read(self.config_file)

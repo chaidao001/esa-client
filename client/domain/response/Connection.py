@@ -1,4 +1,4 @@
-from domain.response import Response
+from client.domain.response import Response
 
 
 class Connection(Response):
@@ -7,5 +7,5 @@ class Connection(Response):
         self._connection_id = response["connectionId"]
 
     @property
-    def connectionId(self):
+    def connection_id(self):
         return self._connection_id

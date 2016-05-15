@@ -1,4 +1,4 @@
-from domain.response import Response
+from client.domain.response import Response
 
 
 class Status(Response):

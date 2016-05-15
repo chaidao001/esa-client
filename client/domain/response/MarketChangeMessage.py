@@ -1,5 +1,5 @@
-from domain.marketchange.MarketChange import MarketChange
-from domain.response import Response
+from client.domain.response import Response
+from client.domain.marketchange import MarketChange
 
 
 class MarketChangeMessage(Response):
