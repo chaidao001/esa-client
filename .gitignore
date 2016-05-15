@@ -5,4 +5,4 @@
 log/
 
 # Config file
-src/conf/config.ini
+conf/config.ini

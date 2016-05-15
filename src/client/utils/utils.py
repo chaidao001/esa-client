@@ -1,7 +1,5 @@
 import json
 
-import requests
-
 
 def serialise(message):
     return json.dumps(message.to_dict())
@@ -21,11 +19,3 @@ def calculate_book(prices: list()):
 
 def round_to_2dp(value):
     return round(value * 100) / 100
-
-
-def get_new_session(username, password, app_key):
-    url = 'https://identitysso.betfair.com/api/login'
-    data = {'username': username, 'password': password}
-    headers = {"Accept": "application/json", "X-Application": app_key}
-    req = requests.post(url, headers=headers, data=data)
-    return req.json()['token']
