@@ -47,8 +47,7 @@ class EsaClient:
 
     def _stop_recv_threads(self):
         logging.info("Trying to stop %s" % self._recv_thread.name)
-        self._conn = None
-        self._connection_id = None
+        self._close_socket()
 
     def _start_recv(self):
         logging.info('Starting to receive messages')
@@ -76,12 +75,15 @@ class EsaClient:
                 exit(1)
 
     def _close_socket(self):
+        logging.info("Closing socket...")
         try:
             self._conn.shutdown(socket.SHUT_RDWR)
             self._conn.close()
+        except Exception as e:
+            logging.warning(e)
+        finally:
             self._conn = None
-        except socket.error as e:
-            logging.error(e)
+            self._connection_id = None
 
     def _send(self, message: str):
         try:
@@ -212,7 +214,7 @@ class EsaClient:
         self._close_socket()
 
     def terminate(self):
-        if not self._conn:
+        if self._conn:
             self._close_socket()
         logging.info("Terminated.")
         exit(0)
