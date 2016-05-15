@@ -1,9 +1,8 @@
-.idea
-log
+.idea/
+.DS_Store
 *.pyc
+
+log/
 
 # Config file
 src/conf/config.ini
-
-# Mac stuff
-.DS_Store
