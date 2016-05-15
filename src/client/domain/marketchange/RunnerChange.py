@@ -1,7 +1,6 @@
-from client.domain.price.LastTradedPrice import LastTradedPrice
-from client.domain.price.PriceDict import PriceDict
-
-from client.domain.price.PriceLadder import PriceLadder
+from src.client.domain.price.LastTradedPrice import LastTradedPrice
+from src.client.domain.price.PriceDict import PriceDict
+from src.client.domain.price.PriceLadder import PriceLadder
 
 
 class RunnerChange:

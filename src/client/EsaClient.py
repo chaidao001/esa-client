@@ -5,16 +5,16 @@ import ssl
 import threading
 from time import sleep
 
-from client.cache.Cache import Cache
-from client.domain.request import Request
-from client.domain.request.Authentication import Authentication
-from client.domain.request.Heartbeat import Heartbeat
-from client.domain.request.MarketFilter import MarketFilter
-from client.domain.request.Subscription import Subscription
-from client.domain.response.Connection import Connection
-from client.domain.response.MarketChangeMessage import MarketChangeMessage
-from client.domain.response.Status import Status
-from client.utils.utils import serialise, format_json
+from src.client.cache.Cache import Cache
+from src.client.domain.request import Request
+from src.client.domain.request.Authentication import Authentication
+from src.client.domain.request.Heartbeat import Heartbeat
+from src.client.domain.request.MarketFilter import MarketFilter
+from src.client.domain.request.Subscription import Subscription
+from src.client.domain.response.Connection import Connection
+from src.client.domain.response.MarketChangeMessage import MarketChangeMessage
+from src.client.domain.response.Status import Status
+from src.client.utils.utils import serialise, format_json
 
 
 class EsaClient:

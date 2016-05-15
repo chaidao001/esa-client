@@ -1,5 +1,5 @@
-from client.domain.marketchange import MarketChange
-from client.utils.utils import format_value
+from src.client.domain.marketchange import MarketChange
+from src.client.utils.utils import format_value
 
 
 class Cache:
@@ -49,12 +49,14 @@ class Cache:
                 bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
                 bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
 
-                result += ladder_format.format("Runner " + str(runner.id), bdatb_prices, bdatl_prices, self._get_ltp_string(rc.ltp))
+                result += ladder_format.format("Runner " + str(runner.id), bdatb_prices, bdatl_prices,
+                                               self._get_ltp_string(rc.ltp))
                 result += ladder_format.format("£" + format_value(rc.tv), bdatb_sizes, bdatl_sizes, "")
 
         return result
 
-    def _get_ltp_string(self, ltp):
+    @staticmethod
+    def _get_ltp_string(ltp):
         if ltp is not None:
             return str(ltp)
         else:

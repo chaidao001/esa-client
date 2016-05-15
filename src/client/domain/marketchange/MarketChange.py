@@ -1,5 +1,5 @@
-from client.domain.marketchange.MarketDefinition import MarketDefinition
-from client.domain.marketchange.RunnerChange import RunnerChange
+from src.client.domain.marketchange.MarketDefinition import MarketDefinition
+from src.client.domain.marketchange.RunnerChange import RunnerChange
 
 
 class MarketChange:

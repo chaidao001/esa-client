@@ -1,4 +1,4 @@
-from client.domain.price.PriceVol import PriceVol
+from src.client.domain.price.PriceVol import PriceVol
 
 
 class PriceLadder:

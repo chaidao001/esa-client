@@ -1,4 +1,4 @@
-from client.domain.request import Request
+from src.client.domain.request import Request
 
 
 class Heartbeat(Request):

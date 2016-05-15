@@ -1,6 +1,6 @@
 from pkg_resources import iteritems
 
-from client.domain.request import Request
+from src.client.domain.request import Request
 
 
 class Subscription(Request):

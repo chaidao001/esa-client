@@ -1,9 +1,9 @@
 import logging
 import logging.config
 
-from client.EsaClient import EsaClient
-from client.utils.Config import Config
-from client.utils.utils import get_new_session
+from src.client.EsaClient import EsaClient
+from src.client.utils.Config import Config
+from src.client.utils.utils import get_new_session
 
 
 def main():

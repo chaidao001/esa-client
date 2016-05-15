@@ -1,11 +1,9 @@
 .idea
 log
-
-# Python cache
-__pycache__
+*.pyc
 
 # Config file
-conf/config.ini
+src/conf/config.ini
 
 # Mac stuff
 .DS_Store

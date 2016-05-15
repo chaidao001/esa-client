@@ -1,4 +1,4 @@
-from client.domain.marketchange import Runner
+from src.client.domain.marketchange.Runner import Runner
 
 
 class MarketDefinition:
