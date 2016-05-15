@@ -1,6 +1,6 @@
 from pkg_resources import iteritems
 
-from client.domain.request.request import Request
+from src.client.domain.request.request import Request
 
 
 class Authentication(Request):
