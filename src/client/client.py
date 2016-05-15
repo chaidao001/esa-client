@@ -9,7 +9,7 @@ from src.client.cache.cache import Cache
 from src.client.domain.request import request
 from src.client.domain.request.authentication import Authentication
 from src.client.domain.request.heartbeat import Heartbeat
-from src.client.domain.request.marketFilter import MarketFilter
+from src.client.domain.request.marketfilter import MarketFilter
 from src.client.domain.request.subscription import Subscription
 from src.client.domain.response.connection import Connection
 from src.client.domain.response.marketchangemessage import MarketChangeMessage
