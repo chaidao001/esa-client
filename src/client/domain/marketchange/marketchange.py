@@ -7,12 +7,20 @@ class MarketChange:
         self._id = response["id"]
         if "rc" in response:
             self._rc = {rc["id"]: RunnerChange(rc) for rc in response["rc"]}
+        else:
+            self._rc = None
         if "img" in response:
             self._img = response["img"]
+        else:
+            self._img = None
         if "marketDefinition" in response:
             self._market_definition = MarketDefinition(response["marketDefinition"])
+        else:
+            self._market_definition = None
         if "tv" in response:
             self._tv = response["tv"]
+        else:
+            self._tv = 0
 
     def update(self, market_change):
         if hasattr(market_change, "rc"):

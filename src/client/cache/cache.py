@@ -26,11 +26,11 @@ class Cache:
 
             result += "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
 
-            if market_status == "CLOSED":
+            if market_status == "CLOSED" or not market.rc:
                 continue
 
-            runners = market.market_def.runners
             runner_changes = market.rc
+            runners = market.market_def.runners
 
             for runner in runners:
                 if runner.status != "ACTIVE":

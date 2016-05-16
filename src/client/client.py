@@ -18,11 +18,13 @@ from src.client.utils.utils import serialise, format_json
 
 
 class EsaClient:
-    def __init__(self, host: str, port: int, app_key: str, session_token: str, heartbeat_interval_second: int):
+    def __init__(self, host: str, port: int, app_key: str, session_token: str, market_filter: MarketFilter,
+                 heartbeat_interval_second: int):
         self._host = host
         self._port = int(port)
         self._app_key = app_key
         self._session_token = session_token
+        self._market_filter = market_filter
         self._heartbeat_interval_second = heartbeat_interval_second
 
         self._cache = Cache()
@@ -30,11 +32,12 @@ class EsaClient:
         self._connection_id = None
         self._initial_clk = None
         self._clk = None
-        self._market_filter = MarketFilter()
+        self._working = True
 
     def init(self):
         logging.info('Initialising ESA client')
         self._connect_and_auth()
+        self.subscribe(self._market_filter)
         self._start_send()
 
     def _connect_and_auth(self):
@@ -57,22 +60,22 @@ class EsaClient:
     def _start_send(self):
         logging.info('Starting to send heartbeats')
 
-        while True:
+        while self._working:
             try:
-                while self._conn:
+                while self._conn and self._working:
                     self.heartbeat()
                     sleep(self._heartbeat_interval_second)
 
-                logging.info("Stopped sending.")
-                self._reconnect_and_auth()
+                logging.info("Stopped sending")
+
+                if self._working:
+                    self._reconnect_and_auth()
             except KeyboardInterrupt:
                 logging.warning("KeyboardInterrupt.  Exiting...")
 
                 self._stop_recv_threads()
                 while self._recv_thread.is_alive():
                     sleep(1)
-
-                exit(1)
 
     def _close_socket(self):
         logging.info("Closing socket...")
@@ -112,14 +115,14 @@ class EsaClient:
             except Exception as e:
                 logging.warning("Failed to deserialise message '{}' because: {}".format(received_message, e))
         else:
-            logging.warning("Connection closed.")
+            logging.warning("Connection closed")
             self._stop_recv_threads()
 
     def _receive_requests(self):
         while self._conn:
             self._receive_request()
 
-        logging.info("Stopped receiving.")
+        logging.info("Stopped receiving")
 
     def _receive_request(self):
         message = self._recv()
@@ -156,7 +159,7 @@ class EsaClient:
                 logging.info(self._cache.formatted_string())
 
         else:
-            logging.error("Unknown message received.")
+            logging.error("Unknown message received")
 
     def _update_clk(self, response: MarketChangeMessage):
         if hasattr(response, "_initial_clk"):
@@ -185,7 +188,7 @@ class EsaClient:
     def heartbeat(self):
         self._send_request(Heartbeat())
 
-    def subscribe(self, params=list()):
+    def subscribe(self, params):
         subscription = Subscription()
         subscription.market_filter = self._market_filter
 
@@ -210,14 +213,14 @@ class EsaClient:
         self._send_request(subscription)
 
     def disconnect(self):
-        logging.info("Disconnecting...\n")
+        logging.info("Disconnecting...")
         self._close_socket()
 
     def terminate(self):
         if self._conn:
             self._close_socket()
-        logging.info("Terminated.")
-        exit(0)
+        self._working = False
+        logging.info("Terminated")
 
     def print_cache(self):
         logging.info(format_json(self._cache))
