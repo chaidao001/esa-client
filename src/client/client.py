@@ -120,7 +120,10 @@ class EsaClient:
 
     def _receive_requests(self):
         while self._conn:
-            self._receive_request()
+            try:
+                self._receive_request()
+            except Exception as e:
+                logging.error("Exception during receiving: %s" % e)
 
         logging.info("Stopped receiving")
 
