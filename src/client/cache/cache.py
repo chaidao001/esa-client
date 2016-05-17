@@ -1,4 +1,4 @@
-from src.client.domain.marketchange import marketchange
+from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.utils.utils import format_value
 
 
@@ -13,7 +13,7 @@ class Cache:
             else:
                 self._update_market(market_change)
 
-    def _update_market(self, market_change: marketchange):
+    def _update_market(self, market_change: MarketChange):
         self._markets[market_change.id].update(market_change)
 
     def formatted_string(self):
@@ -26,7 +26,7 @@ class Cache:
 
             result += "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
 
-            if market_status == "CLOSED" or not market.rc:
+            if market_status == "CLOSED" or not hasattr(market, "_rc"):
                 continue
 
             runner_changes = market.rc
