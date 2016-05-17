@@ -15,11 +15,11 @@ class MarketChange:
             self._tv = response["tv"]
 
     def update(self, market_change):
+        if hasattr(market_change, "marketDef"):
+            self._market_definition = market_change.market_def
         if hasattr(market_change, "rc"):
             for runner_id in market_change.rc:
                 self.rc[runner_id].update(market_change.rc[runner_id])
-        if hasattr(market_change, "marketDef"):
-            self._market_definition = market_change.market_def
         if hasattr(market_change, "tv"):
             self._tv = market_change.tv
 

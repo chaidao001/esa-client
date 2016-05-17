@@ -1,3 +1,4 @@
+from src.client.domain.marketchange.marketstatus import MarketStatus
 from src.client.domain.marketchange.runner import Runner
 
 
@@ -26,7 +27,7 @@ class MarketDefinition:
         if "betDelay" in response:
             self._bet_delay = response["betDelay"]
         if "status" in response:
-            self._status = response["status"]
+            self._status = MarketStatus[response["status"]]
         if "numberOfWinners" in response:
             self._number_of_winners = response["numberOfWinners"]
         if "persistenceEnabled" in response:

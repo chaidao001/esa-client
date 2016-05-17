@@ -1,3 +1,4 @@
+from src.client.domain.marketchange.marketstatus import MarketStatus
 from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.utils.utils import format_value
 
@@ -26,7 +27,7 @@ class Cache:
 
             result += "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
 
-            if market_status == "CLOSED" or not hasattr(market, "_rc"):
+            if market_status == MarketStatus.CLOSED or not hasattr(market, "rc"):
                 continue
 
             runner_changes = market.rc
