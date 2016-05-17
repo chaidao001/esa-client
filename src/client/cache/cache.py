@@ -1,6 +1,6 @@
-from src.client.domain.marketchange.runner import Runner
 from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.domain.marketchange.marketstatus import MarketStatus
+from src.client.domain.marketchange.runner import Runner
 from src.client.utils.utils import format_value
 
 
@@ -38,7 +38,7 @@ class Cache:
         for marketId, market in self._markets.items():
             market_status = market.market_def.status
 
-            result += "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
+            market_result = "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
 
             if market_status == MarketStatus.CLOSED or not hasattr(market, "rc"):
                 continue
@@ -60,9 +60,12 @@ class Cache:
                 bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
                 bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
 
-                result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
-                                               self._get_ltp_string(runner_change.ltp))
-                result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes, "")
+                market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
+                                                      self._get_ltp_string(runner_change.ltp))
+                market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes,
+                                                      "")
+
+            result += market_result + '\n'
 
         return result
 
