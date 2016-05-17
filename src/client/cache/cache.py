@@ -1,3 +1,4 @@
+from src.client.domain.marketchange.runner import Runner
 from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.domain.marketchange.marketstatus import MarketStatus
 from src.client.utils.utils import format_value
@@ -43,16 +44,13 @@ class Cache:
                 continue
 
             runner_changes = market.rc
-            runners = market.market_def.runners
 
-            for runner in runners:
-                if runner.status != "ACTIVE":
+            for runner_id, runner_change in runner_changes.items():
+                if market.market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE:
                     continue
 
-                rc = runner_changes[runner.id]
-
-                bdatb = rc.bdatb.price_list[:3][::-1]
-                bdatl = rc.bdatl.price_list[:3]
+                bdatb = runner_change.bdatb.price_list[:3][::-1]
+                bdatl = runner_change.bdatl.price_list[:3]
 
                 back_price_vol_format = '{:>12}' * len(bdatb)
                 lay_price_vol_format = '{:<12}' * len(bdatl)
@@ -62,9 +60,9 @@ class Cache:
                 bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
                 bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
 
-                result += ladder_format.format("Runner " + str(runner.id), bdatb_prices, bdatl_prices,
-                                               self._get_ltp_string(rc.ltp))
-                result += ladder_format.format("£" + format_value(rc.tv), bdatb_sizes, bdatl_sizes, "")
+                result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
+                                               self._get_ltp_string(runner_change.ltp))
+                result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes, "")
 
         return result
 

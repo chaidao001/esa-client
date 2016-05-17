@@ -35,7 +35,10 @@ class MarketDefinition:
         if "bspReconciled" in response:
             self._bsp_reconciled = response["bspReconciled"]
         if "runners" in response:
-            self._runners = [Runner(r) for r in response["runners"]]
+            self._runners = dict()
+            for r in response["runners"]:
+                runner = Runner(r)
+                self._runners[runner.id] = runner
         if "openDate" in response:
             self._open_date = response["openDate"]
         if "countryCode" in response:
