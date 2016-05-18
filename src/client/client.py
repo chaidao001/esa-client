@@ -3,6 +3,7 @@ import logging
 import socket
 import ssl
 import threading
+from datetime import datetime
 from time import sleep
 
 from src.client.cache.cache import Cache
@@ -34,6 +35,9 @@ class EsaClient:
         self._clk = None
         self._working = True
 
+        self._last_receive_time = None
+        self._timeout_interval_second = 30
+
     def init(self):
         logging.info('Initialising ESA client')
         self._connect_and_auth()
@@ -64,6 +68,7 @@ class EsaClient:
             try:
                 while self._conn and self._working:
                     self.heartbeat()
+                    self._check_no_message_duration()
                     sleep(self._heartbeat_interval_second)
 
                 logging.info("Stopped sending")
@@ -76,6 +81,11 @@ class EsaClient:
                 self._stop_recv_threads()
                 while self._recv_thread.is_alive():
                     sleep(1)
+
+    def _check_no_message_duration(self):
+        no_message_duration = datetime.now() - self._last_receive_time
+        if no_message_duration.seconds > self._timeout_interval_second:
+            logging.warning("Haven't received any message in %s" % no_message_duration)
 
     def _close_socket(self):
         logging.info("Closing socket...")
@@ -133,11 +143,12 @@ class EsaClient:
     def _send_request(self, request: Request):
         if request:
             message = serialise(request)
-            logging.info("Sending: %s", message)
+            logging.debug("Sending: %s", message)
             self._send(message)
 
     def _process_response(self, message: dict):
         op = message["op"]
+        self._last_receive_time = datetime.now()
 
         if op == "connection":
             response = Connection(message)
@@ -145,7 +156,7 @@ class EsaClient:
             logging.info("Connection has been established with ID %s", self._connection_id)
         elif op == "status":
             response = Status(message)
-            logging.info("Received: %s", response)
+            logging.debug("Received: %s", response)
 
             if response.connection_closed:
                 self._stop_recv_threads()
@@ -157,7 +168,7 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
-                logging.info(self._cache.formatted_string())
+                logging.debug(self._cache.formatted_string())
 
         else:
             logging.error("Unknown message received: %s" % message)
