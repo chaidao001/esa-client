@@ -11,21 +11,21 @@ class TestCache(TestCase):
     def setUp(self):
         self.cache = Cache()
 
-    def test_on_receive_not_added_when_closed(self):
+    def test_on_receive_receiveClosedMarket_notAdded(self):
         market_change = TestCache.create_market_change_with_status(MarketStatus.CLOSED)
         market_changes = [market_change]
         self.cache.on_receive(market_changes)
 
         self.assertEqual(len(self.cache.markets), 0)
 
-    def test_on_receive_added_when_open(self):
+    def test_on_receive_receiveOpenMarket_added(self):
         market_change = TestCache.create_market_change_with_status(MarketStatus.OPEN)
         market_changes = [market_change]
         self.cache.on_receive(market_changes)
 
         self.assertEqual(len(self.cache.markets), 1)
 
-    def test_remove_from_cache_after_close_with_img(self):
+    def test_on_receive_receiveImgWithCosedMarket_removeFromCache(self):
         market_change = TestCache.create_market_change_with_status(MarketStatus.OPEN)
         market_changes = [market_change]
         self.cache.on_receive(market_changes)
@@ -39,7 +39,7 @@ class TestCache(TestCase):
 
         self.assertEqual(len(self.cache.markets), 0)
 
-    def test_remove_from_cache_after_close(self):
+    def test_on_receive_marketBecomesClosed_removeFromCache(self):
         market_change = TestCache.create_market_change_with_status(MarketStatus.OPEN)
         market_changes = [market_change]
         self.cache.on_receive(market_changes)

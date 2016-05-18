@@ -4,7 +4,7 @@ from client.domain.marketchange.marketchange import MarketChange
 
 
 class TestMarketChange(TestCase):
-    def test_update_update_with_empty_runner_change_before(self):
+    def test_update_updateMarketChangeWhenEmptyBefore_addToCache(self):
         market_change = TestMarketChange.create_market_change()
         incoming_market_change = TestMarketChange.create_market_change_with_runner_change("111")
         self.assertEqual(len(market_change.rc), 0)
@@ -13,7 +13,7 @@ class TestMarketChange(TestCase):
 
         self.assertEqual(len(market_change.rc), 1)
 
-    def test_update_update_when_runner_not_exist(self):
+    def test_update_receiveUpdateOnNewMarket_addToCache(self):
         market_change = TestMarketChange.create_market_change_with_runner_change("111")
         incoming_market_change = TestMarketChange.create_market_change_with_runner_change("222")
         self.assertEqual(len(market_change.rc), 1)
@@ -22,7 +22,7 @@ class TestMarketChange(TestCase):
 
         self.assertEqual(len(market_change.rc), 2)
 
-    def test_update_update_when_runner_exists(self):
+    def test_update_receiveUpdateOnExistingMarket_updateCorrectly(self):
         runner_id = "111"
         market_change = TestMarketChange.create_market_change_with_runner_change_and_spn(runner_id, 5)
         incoming_market_change = TestMarketChange.create_market_change_with_runner_change_and_spn(runner_id, 6)

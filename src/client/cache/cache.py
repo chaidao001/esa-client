@@ -1,3 +1,5 @@
+import logging
+
 from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.domain.marketchange.marketstatus import MarketStatus
 from src.client.domain.marketchange.runner import Runner
@@ -17,7 +19,10 @@ class Cache:
                 else:
                     # remove if full img and already in cache
                     if market_id in self._markets:
+                        logging.info("Market %s is closed.  Removing from cache" % market_id)
                         self._markets.pop(market_id)
+                    else:
+                        logging.info("Market %s is closed.  Ignore")
             else:
                 self._update_market(market_change)
 
@@ -28,6 +33,7 @@ class Cache:
 
         # remove market from cache if closed
         if market.market_def.status == MarketStatus.CLOSED:
+            logging.info("Market %s is closed.  Removing from cache" % market_id)
             self._markets.pop(market_id)
 
     def formatted_string(self):
