@@ -19,7 +19,7 @@ class MarketChange:
     def update(self, market_change):
         if hasattr(market_change, "market_def"):
             self._market_definition = market_change.market_def
-        if hasattr(market_change, "rc"):
+        if len(market_change.rc) > 0:
             for runner_id, runner_change in market_change.rc.items():
                 if runner_id in self.rc:
                     self.rc[runner_id].update(runner_change)
