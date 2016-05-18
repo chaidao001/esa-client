@@ -179,7 +179,7 @@ class EsaClient:
             while not self._connection_id:
                 sleep(1)
         except socket.error as e:
-            logging.error(e)
+            logging.error("Error when connecting: %s" % e)
             exit(1)
 
     def authenticate(self):
