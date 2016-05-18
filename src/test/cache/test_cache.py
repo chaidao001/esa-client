@@ -53,6 +53,13 @@ class TestCache(TestCase):
 
         self.assertEqual(len(self.cache.markets), 0)
 
+    def test_on_receive_receiveNonImgClosedMarket_ignore(self):
+        market_change = TestCache.create_market_change_with_img_and_status(False, MarketStatus.CLOSED)
+        market_changes = [market_change]
+        self.cache.on_receive(market_changes)
+
+        self.assertEqual(len(self.cache.markets), 0)
+
     @staticmethod
     def create_market_change_with_img_and_status(img: bool, status: MarketStatus):
         return MarketChange({"id": 5, "img": img, "marketDefinition": {"status": status.name}})

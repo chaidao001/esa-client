@@ -12,8 +12,8 @@ class Cache:
 
     def on_receive(self, market_changes: list()):
         for market_change in market_changes:
+            market_id = market_change.id
             if hasattr(market_change, "img") and market_change.img:
-                market_id = market_change.id
                 if market_change.market_def.status != MarketStatus.CLOSED:
                     self._markets[market_id] = market_change
                 else:
@@ -28,13 +28,17 @@ class Cache:
 
     def _update_market(self, market_change: MarketChange):
         market_id = market_change.id
-        market = self._markets[market_id]
-        market.update(market_change)
 
-        # remove market from cache if closed
-        if market.market_def.status == MarketStatus.CLOSED:
-            logging.info("Market %s is closed.  Removing from cache" % market_id)
-            self._markets.pop(market_id)
+        if market_id not in self._markets and market_change.market_def.status == MarketStatus.CLOSED:
+            logging.info("Market %s has been closed and removed from cache.  Ignore" % market_id)
+        else:
+            market = self._markets[market_id]
+            market.update(market_change)
+
+            # remove market from cache if closed
+            if market.market_def.status == MarketStatus.CLOSED:
+                logging.info("Market %s is closed.  Removing from cache" % market_id)
+                self._markets.pop(market_id)
 
     def formatted_string(self):
         ladder_format = '{:<15} {:<50} {:>50} {:<10} \n'

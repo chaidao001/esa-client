@@ -93,6 +93,7 @@ class EsaClient:
             self._conn.sendall((message + '\n').encode())
         except socket.error as e:
             logging.error("Error when sending message {}: {}".format(message, e))
+            self._stop_recv_threads()
 
     def _recv(self) -> dict:
         size = 1
