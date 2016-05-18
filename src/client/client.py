@@ -156,7 +156,7 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
-                # logging.info(self._cache.formatted_string())
+                logging.info(self._cache.formatted_string())
 
         else:
             logging.error("Unknown message received")
