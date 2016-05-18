@@ -92,7 +92,7 @@ class EsaClient:
         try:
             self._conn.sendall((message + '\n').encode())
         except socket.error as e:
-            logging.error(e)
+            logging.error("Error when sending message {}: {}".format(message, e))
 
     def _recv(self) -> dict:
         size = 1
@@ -159,7 +159,7 @@ class EsaClient:
                 logging.info(self._cache.formatted_string())
 
         else:
-            logging.error("Unknown message received")
+            logging.error("Unknown message received: %s" % message)
 
     def _update_clk(self, response: MarketChangeMessage):
         if hasattr(response, "_initial_clk"):
