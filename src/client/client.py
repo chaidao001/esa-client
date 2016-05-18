@@ -167,7 +167,7 @@ class EsaClient:
             self._update_clk(response)
 
             if hasattr(response, "segment_type"):
-                logging.info(response.segment_type)
+                logging.info("Received segment type: %s" % response.segment_type)
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)

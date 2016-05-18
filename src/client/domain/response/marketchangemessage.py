@@ -1,3 +1,5 @@
+from enum import Enum
+
 from src.client.domain.marketchange.marketchange import MarketChange
 from src.client.domain.response import Response
 
@@ -9,7 +11,7 @@ class MarketChangeMessage(Response):
         if "clk" in response:
             self._clk = response["clk"]
         if "segmentType" in response:
-            self._segment_type = response["segmentType"]
+            self._segment_type = MarketChangeMessage.SegmentType[response["segmentType"]]
         if "mc" in response:
             self._mc = [MarketChange(mc) for mc in (response["mc"])]
         if "initialClk" in response:
@@ -36,3 +38,6 @@ class MarketChangeMessage(Response):
     @property
     def mc(self):
         return self._mc
+
+    class SegmentType(Enum):
+        SEG_START, SEG, SEG_END = range(3)

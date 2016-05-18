@@ -36,6 +36,8 @@ class RunnerChange:
             self._ltp = LastTradedPrice(None, hasattr(self, "_trd"))
         if 'tv' in response:
             self._tv = response['tv']
+        else:
+            self._tv = 0
 
     def update(self, runner_change):
         for attr, value in vars(runner_change).items():

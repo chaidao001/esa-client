@@ -11,5 +11,8 @@ class PriceVol:
     def vol(self):
         return self._vol
 
+    def __eq__(self, other):
+        return self.price == other.price and self.vol == other.vol
+
     def __repr__(self):
         return str(vars(self))

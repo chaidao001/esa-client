@@ -20,5 +20,11 @@ class PriceLadder:
     def get_price_at_position(self, position):
         return self._ladder[position]
 
+    def size(self):
+        return len(self._ladder)
+
+    def __eq__(self, other):
+        return self.ladder == other.ladder
+
     def __repr__(self):
         return str(vars(self))

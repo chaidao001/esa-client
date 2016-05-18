@@ -56,7 +56,9 @@ class Cache:
             runner_changes = market.rc
 
             for runner_id, runner_change in runner_changes.items():
-                if market.market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE:
+                if market.market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE \
+                        or not hasattr(runner_change, "bdatb") or runner_change.bdatb.size() < 3 \
+                        or not hasattr(runner_change, "bdatl") or runner_change.bdatl.size() < 3:
                     continue
 
                 bdatb = runner_change.bdatb.price_list[:3][::-1]
