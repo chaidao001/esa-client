@@ -22,7 +22,7 @@ class Cache:
                         logging.info("Market %s is closed.  Removing from cache" % market_id)
                         self._markets.pop(market_id)
                     else:
-                        logging.info("Market %s is closed.  Ignore")
+                        logging.info("Market %s is closed.  Ignore" % market_id)
             else:
                 self._update_market(market_change)
 
