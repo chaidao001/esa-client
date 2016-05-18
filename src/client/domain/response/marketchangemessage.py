@@ -1,12 +1,15 @@
-from src.client.domain.response import Response
 from src.client.domain.marketchange.marketchange import MarketChange
+from src.client.domain.response import Response
 
 
 class MarketChangeMessage(Response):
     def __init__(self, response):
         super().__init__(response["op"])
-        self._clk = response["clk"]
         self._pt = response["pt"]
+        if "clk" in response:
+            self._clk = response["clk"]
+        if "segmentType" in response:
+            self._segment_type = response["segmentType"]
         if "mc" in response:
             self._mc = [MarketChange(mc) for mc in (response["mc"])]
         if "initialClk" in response:
@@ -25,6 +28,10 @@ class MarketChangeMessage(Response):
     @property
     def clk(self):
         return self._clk
+
+    @property
+    def segment_type(self):
+        return self._segment_type
 
     @property
     def mc(self):

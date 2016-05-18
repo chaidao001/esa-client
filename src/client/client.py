@@ -166,6 +166,9 @@ class EsaClient:
 
             self._update_clk(response)
 
+            if hasattr(response, "segment_type"):
+                logging.info(response.segment_type)
+
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
                 logging.debug(self._cache.formatted_string())
@@ -174,9 +177,10 @@ class EsaClient:
             logging.error("Unknown message received: %s" % message)
 
     def _update_clk(self, response: MarketChangeMessage):
-        if hasattr(response, "_initial_clk"):
+        if hasattr(response, "initial_clk"):
             self._initial_clk = response.initial_clk
-        self._clk = response.clk
+        if hasattr(response, "clk"):
+            self._clk = response.clk
 
     # Esa commands:
     def connect(self):
