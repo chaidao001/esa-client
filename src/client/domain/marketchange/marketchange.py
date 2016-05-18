@@ -7,6 +7,8 @@ class MarketChange:
         self._id = response["id"]
         if "rc" in response:
             self._rc = {rc["id"]: RunnerChange(rc) for rc in response["rc"]}
+        else:
+            self._rc = dict()
         if "img" in response:
             self._img = response["img"]
         if "marketDefinition" in response:
@@ -18,8 +20,11 @@ class MarketChange:
         if hasattr(market_change, "market_def"):
             self._market_definition = market_change.market_def
         if hasattr(market_change, "rc"):
-            for runner_id in market_change.rc:
-                self.rc[runner_id].update(market_change.rc[runner_id])
+            for runner_id, runner_change in market_change.rc.items():
+                if runner_id in self.rc:
+                    self.rc[runner_id].update(runner_change)
+                else:
+                    self.rc[runner_id] = runner_change
         if hasattr(market_change, "tv"):
             self._tv = market_change.tv
 
