@@ -41,7 +41,7 @@ class EsaClient:
     def init(self):
         logging.info('Initialising ESA client')
         self._connect_and_auth()
-        self.subscribe(self._market_filter)
+        self.subscribe()
         self._start_send()
 
     def _connect_and_auth(self):
@@ -205,27 +205,14 @@ class EsaClient:
     def heartbeat(self):
         self._send_request(Heartbeat())
 
-    def subscribe(self, params):
+    def subscribe(self):
         subscription = Subscription()
         subscription.market_filter = self._market_filter
 
-        if isinstance(params, MarketFilter):
-            self._market_filter = params
-        else:
-            if isinstance(params, list) and len(params) > 0:
-                market_ids = params
-            else:
-                market_ids = []
-
-            self._market_filter._market_ids = market_ids
-
-        self._send_request(subscription)
-
-    def resubscribe(self):
-        subscription = Subscription()
-        subscription.initial_clk = self._initial_clk
-        subscription.clk = self._clk
-        subscription.market_filter = self._market_filter
+        if self._initial_clk and self._clk:
+            logging.info("Resubscribing with initial clk {} and clk {}".format(self._initial_clk, self._clk))
+            subscription.initial_clk = self._initial_clk
+            subscription.clk = self._clk
 
         self._send_request(subscription)
 
