@@ -159,6 +159,7 @@ class EsaClient:
             logging.debug("Received: %s", response)
 
             if response.connection_closed:
+                logging.warning("Connection closed by server: %s" % response)
                 self._stop_recv_threads()
 
         elif op == "mcm":
@@ -171,7 +172,7 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
-                logging.debug(self._cache.formatted_string())
+                # logging.debug(self._cache.formatted_string())
 
         else:
             logging.error("Unknown message received: %s" % message)
