@@ -6,8 +6,6 @@ from client.domain.marketchange.marketstatus import MarketStatus
 
 
 class TestCache(TestCase):
-    cache = None
-
     def setUp(self):
         self.cache = Cache()
 

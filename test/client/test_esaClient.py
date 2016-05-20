@@ -10,8 +10,6 @@ from client.domain.request.marketfilter import MarketFilter
 
 
 class TestEsaClient(TestCase):
-    client = None
-
     def setUp(self):
         self.client = EsaClient("", 8080, "", "", MarketFilter(), 50)
         conn = Mock()

@@ -5,8 +5,6 @@ from client.domain.price.pricevol import PriceVol
 
 
 class TestPriceLadder(TestCase):
-    price_ladder = None
-
     def setUp(self):
         self.price_ladder = PriceLadder([[0, 1, 2], [3, 4, 5]])
 
