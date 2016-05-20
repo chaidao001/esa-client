@@ -19,14 +19,17 @@ from src.client.utils.utils import serialise, format_json
 
 
 class EsaClient:
-    def __init__(self, host: str, port: int, app_key: str, session_token: str, market_filter: MarketFilter,
-                 heartbeat_interval_second: int):
-        self._host = host
-        self._port = int(port)
-        self._app_key = app_key
-        self._session_token = session_token
+    def __init__(self, configs, session_manager, market_filter: MarketFilter):
+        esa_end_point = configs.esa_endpoint
+        self._host = esa_end_point.host
+        self._port = esa_end_point.port
+
+        self._app_key = configs.app_key
+
+        self._heartbeat_interval_second = configs.esa_heartbeat_interval_second
+
+        self._session_manager = session_manager
         self._market_filter = market_filter
-        self._heartbeat_interval_second = heartbeat_interval_second
 
         self._cache = Cache()
         self._conn = None
@@ -200,7 +203,7 @@ class EsaClient:
             exit(1)
 
     def authenticate(self):
-        self._send_request(Authentication(self._app_key, self._session_token))
+        self._send_request(Authentication(self._app_key, self._session_manager.get_session()))
 
     def heartbeat(self):
         self._send_request(Heartbeat())
