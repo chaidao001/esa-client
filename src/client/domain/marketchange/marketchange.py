@@ -1,3 +1,5 @@
+from client.domain.marketchange.runner import Runner
+from client.utils.utils import format_value
 from src.client.domain.marketchange.marketdefinition import MarketDefinition
 from src.client.domain.marketchange.runnerchange import RunnerChange
 
@@ -50,6 +52,39 @@ class MarketChange:
     @property
     def tv(self):
         return self._tv
+
+    def formatted_string(self):
+
+        ladder_format = '{:<15} {:<50} {:>50}\n'
+
+        market_def = self.market_def
+        market_status = market_def.status
+
+        market_result = "Market {} (£{}) - {}\n".format(self.id, format_value(self.tv), market_status)
+
+        runner_changes = self.rc
+
+        for runner_id, runner_change in runner_changes.items():
+            if market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE \
+                    or not hasattr(runner_change, "bdatb") or runner_change.bdatb.size() < 3 \
+                    or not hasattr(runner_change, "bdatl") or runner_change.bdatl.size() < 3:
+                continue
+
+            bdatb = runner_change.bdatb.price_list[:3][::-1]
+            bdatl = runner_change.bdatl.price_list[:3]
+
+            back_price_vol_format = '{:>12}' * len(bdatb)
+            lay_price_vol_format = '{:<12}' * len(bdatl)
+
+            bdatb_prices = back_price_vol_format.format(*[p.price for p in bdatb])
+            bdatl_prices = lay_price_vol_format.format(*[p.price for p in bdatl])
+            bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
+            bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
+
+            market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices)
+            market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes)
+
+        return market_result + '\n'
 
     def __repr__(self):
         return str(vars(self))
