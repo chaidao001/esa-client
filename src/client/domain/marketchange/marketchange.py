@@ -62,10 +62,11 @@ class MarketChange:
 
         market_result = "Market {} (£{}) - {}\n".format(self.id, format_value(self.tv), market_status.name)
 
-        runner_changes = self.rc
+        for runner in market_def.runners:
+            runner_id = runner.id
+            runner_change = self.rc[runner_id]
 
-        for runner_id, runner_change in runner_changes.items():
-            if market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE \
+            if runner.status != Runner.RunnerStatus.ACTIVE \
                     or not hasattr(runner_change, "bdatb") or runner_change.bdatb.size() < 3 \
                     or not hasattr(runner_change, "bdatl") or runner_change.bdatl.size() < 3:
                 continue
