@@ -47,7 +47,7 @@ class Cache:
         if market_id not in self._markets:
             return ""
 
-        ladder_format = '{:<15} {:<50} {:>50} {:<10} \n'
+        ladder_format = '{:<15} {:<50} {:>50}\n'
 
         market = self._markets[market_id]
         market_status = market.market_def.status
@@ -76,19 +76,10 @@ class Cache:
             bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
             bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
 
-            market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
-                                                  self._get_ltp_string(runner_change.ltp))
-            market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes,
-                                                  "")
+            market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices)
+            market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes)
 
         return market_result + '\n'
-
-    @staticmethod
-    def _get_ltp_string(ltp):
-        if ltp is not None:
-            return str(ltp)
-        else:
-            return ""
 
     @property
     def markets(self):
