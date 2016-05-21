@@ -1,4 +1,5 @@
 import json
+from enum import Enum
 
 
 def serialise(message):
@@ -6,10 +7,11 @@ def serialise(message):
 
 
 def format_json(message):
-    return json.dumps(message, default=lambda o: vars(o), indent=2)
+    return json.dumps(message, default=lambda o: o.name if isinstance(o, Enum) else vars(o), indent=2)
 
 
 def format_to_html(string: str):
+    string = string.replace('"_', '"')
     string = string.replace("\n", "<br>")
     string = "<pre>" + string + "</pre>"
     return string

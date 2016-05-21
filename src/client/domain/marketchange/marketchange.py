@@ -60,7 +60,7 @@ class MarketChange:
         market_def = self.market_def
         market_status = market_def.status
 
-        market_result = "Market {} (£{}) - {}\n".format(self.id, format_value(self.tv), market_status)
+        market_result = "Market {} (£{}) - {}\n".format(self.id, format_value(self.tv), market_status.name)
 
         runner_changes = self.rc
 

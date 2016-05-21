@@ -50,7 +50,8 @@ class Cache:
         return self._markets
 
     def get_market(self, market_id):
-        return self._markets[market_id]
+        if market_id in self._markets:
+            return self._markets[market_id]
 
     def __repr__(self):
         return str(vars(self))

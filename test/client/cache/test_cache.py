@@ -58,6 +58,21 @@ class TestCache(TestCase):
 
         self.assertEqual(len(self.cache.markets), 0)
 
+    def test_get_market_marketNotExist_returnNone(self):
+        market = self.cache.get_market("abc")
+
+        self.assertEqual(market, None)
+
+    def test_get_market_marketExists_returnMarket(self):
+        market_change = TestCache.create_market_change_with_status(MarketStatus.OPEN)
+        market_changes = [market_change]
+        market_id = market_change.id
+
+        self.cache.on_receive(market_changes)
+        market = self.cache.get_market(market_id)
+
+        self.assertEqual(market, market_change)
+
     @staticmethod
     def create_market_change_with_img_and_status(img: bool, status: MarketStatus):
         return MarketChange({"id": 5, "img": img, "marketDefinition": {"status": status.name}})
