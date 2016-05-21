@@ -231,3 +231,7 @@ class EsaClient:
 
     def print_cache(self):
         logging.info(format_json(self._cache))
+
+    @property
+    def cache(self):
+        return self._cache

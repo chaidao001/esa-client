@@ -29,8 +29,11 @@ class Cache:
     def _update_market(self, market_change: MarketChange):
         market_id = market_change.id
 
-        if market_id not in self._markets and market_change.market_def.status == MarketStatus.CLOSED:
-            logging.info("Market %s has been closed and removed from cache.  Ignore" % market_id)
+        if market_id not in self._markets:
+            if hasattr(market_change, "market_def") and market_change.market_def.status == MarketStatus.CLOSED:
+                logging.info("Market %s has been closed and removed from cache.  Ignore" % market_id)
+            else:
+                logging.warning("Market {} not in cache: {}".format(market_id, market_change))
         else:
             market = self._markets[market_id]
             market.update(market_change)
@@ -91,6 +94,9 @@ class Cache:
     @property
     def markets(self):
         return self._markets
+
+    def get_market(self, market_id):
+        return self._markets[market_id]
 
     def __repr__(self):
         return str(vars(self))
