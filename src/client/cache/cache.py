@@ -43,46 +43,45 @@ class Cache:
                 logging.info("Market %s is closed.  Removing from cache" % market_id)
                 self._markets.pop(market_id)
 
-    def formatted_string(self):
+    def formatted_string(self, market_id: str):
+        if market_id not in self._markets:
+            return ""
+
         ladder_format = '{:<15} {:<50} {:>50} {:<10} \n'
 
-        result = ''
+        market = self._markets[market_id]
+        market_status = market.market_def.status
 
-        for marketId, market in self._markets.items():
-            market_status = market.market_def.status
+        if market_status == MarketStatus.CLOSED or not hasattr(market, "rc"):
+            return ""
 
-            market_result = "Market {} (£{}) - {}\n".format(marketId, format_value(market.tv), market_status)
+        market_result = "Market {} (£{}) - {}\n".format(market_id, format_value(market.tv), market_status)
 
-            if market_status == MarketStatus.CLOSED or not hasattr(market, "rc"):
+        runner_changes = market.rc
+
+        for runner_id, runner_change in runner_changes.items():
+            if market.market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE \
+                    or not hasattr(runner_change, "bdatb") or runner_change.bdatb.size() < 3 \
+                    or not hasattr(runner_change, "bdatl") or runner_change.bdatl.size() < 3:
                 continue
 
-            runner_changes = market.rc
+            bdatb = runner_change.bdatb.price_list[:3][::-1]
+            bdatl = runner_change.bdatl.price_list[:3]
 
-            for runner_id, runner_change in runner_changes.items():
-                if market.market_def.runners[runner_id].status != Runner.RunnerStatus.ACTIVE \
-                        or not hasattr(runner_change, "bdatb") or runner_change.bdatb.size() < 3 \
-                        or not hasattr(runner_change, "bdatl") or runner_change.bdatl.size() < 3:
-                    continue
+            back_price_vol_format = '{:>12}' * len(bdatb)
+            lay_price_vol_format = '{:<12}' * len(bdatl)
 
-                bdatb = runner_change.bdatb.price_list[:3][::-1]
-                bdatl = runner_change.bdatl.price_list[:3]
+            bdatb_prices = back_price_vol_format.format(*[p.price for p in bdatb])
+            bdatl_prices = lay_price_vol_format.format(*[p.price for p in bdatl])
+            bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
+            bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
 
-                back_price_vol_format = '{:>12}' * len(bdatb)
-                lay_price_vol_format = '{:<12}' * len(bdatl)
+            market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
+                                                  self._get_ltp_string(runner_change.ltp))
+            market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes,
+                                                  "")
 
-                bdatb_prices = back_price_vol_format.format(*[p.price for p in bdatb])
-                bdatl_prices = lay_price_vol_format.format(*[p.price for p in bdatl])
-                bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
-                bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
-
-                market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices,
-                                                      self._get_ltp_string(runner_change.ltp))
-                market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes,
-                                                      "")
-
-            result += market_result + '\n'
-
-        return result
+        return market_result + '\n'
 
     @staticmethod
     def _get_ltp_string(ltp):
