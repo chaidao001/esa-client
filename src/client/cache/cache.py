@@ -49,6 +49,10 @@ class Cache:
     def markets(self):
         return self._markets
 
+    @property
+    def market_ids(self):
+        return self._markets.keys()
+
     def get_market(self, market_id):
         if market_id in self._markets:
             return self._markets[market_id]
