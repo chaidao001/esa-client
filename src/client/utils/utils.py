@@ -9,6 +9,12 @@ def format_json(message):
     return json.dumps(message, default=lambda o: vars(o), indent=2)
 
 
+def format_to_html(string: str):
+    string = string.replace("\n", "<br>")
+    string = "<pre>" + string + "</pre>"
+    return string
+
+
 def format_value(value):
     return "{:,}".format(value)
 

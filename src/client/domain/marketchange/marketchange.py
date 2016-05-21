@@ -1,7 +1,7 @@
-from client.domain.marketchange.runner import Runner
-from client.utils.utils import format_value
 from src.client.domain.marketchange.marketdefinition import MarketDefinition
+from src.client.domain.marketchange.runner import Runner
 from src.client.domain.marketchange.runnerchange import RunnerChange
+from src.client.utils.utils import format_value
 
 
 class MarketChange:
@@ -78,8 +78,8 @@ class MarketChange:
 
             bdatb_prices = back_price_vol_format.format(*[p.price for p in bdatb])
             bdatl_prices = lay_price_vol_format.format(*[p.price for p in bdatl])
-            bdatb_sizes = back_price_vol_format.format(*['£' + str(p.vol) for p in bdatb])
-            bdatl_sizes = lay_price_vol_format.format(*['£' + str(p.vol) for p in bdatl])
+            bdatb_sizes = back_price_vol_format.format(*['£' + format_value(p.vol) for p in bdatb])
+            bdatl_sizes = lay_price_vol_format.format(*['£' + format_value(p.vol) for p in bdatl])
 
             market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices)
             market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes)

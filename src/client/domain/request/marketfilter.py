@@ -2,7 +2,6 @@ from pkg_resources import iteritems
 
 
 class MarketFilter:
-
     def __init__(self):
 
         self._country_codes = None
@@ -16,16 +15,16 @@ class MarketFilter:
         self._bsp_market = None
 
         self.swagger_types = {
-                'country_codes': 'list[str]',
-                'betting_types': 'list[str]',
-                'turn_in_play_enabled': 'bool',
-                'market_types': 'list[str]',
-                'venues': 'list[str]',
-                'market_ids': 'list[str]',
-                'event_type_ids': 'list[str]',
-                'event_ids': 'list[str]',
-                'bsp_market': 'bool'
-            }
+            'country_codes': 'list[str]',
+            'betting_types': 'list[str]',
+            'turn_in_play_enabled': 'bool',
+            'market_types': 'list[str]',
+            'venues': 'list[str]',
+            'market_ids': 'list[str]',
+            'event_type_ids': 'list[str]',
+            'event_ids': 'list[str]',
+            'bsp_market': 'bool'
+        }
 
         self.attribute_map = {
             'country_codes': 'countryCodes',
@@ -84,7 +83,7 @@ class MarketFilter:
         return self._market_ids
 
     @market_ids.setter
-    def market_ids(self, market_ids):
+    def market_ids(self, market_ids: list()):
         self._market_ids = market_ids
 
     @property
