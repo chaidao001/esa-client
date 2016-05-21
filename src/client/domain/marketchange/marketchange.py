@@ -64,6 +64,10 @@ class MarketChange:
 
         for runner in market_def.runners:
             runner_id = runner.id
+
+            if runner_id not in self.rc:
+                continue
+
             runner_change = self.rc[runner_id]
 
             if runner.status != Runner.RunnerStatus.ACTIVE \
