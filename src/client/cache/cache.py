@@ -13,7 +13,7 @@ class Cache:
     def on_receive(self, market_changes: list()):
         for market_change in market_changes:
             market_id = market_change.id
-            if hasattr(market_change, "img") and market_change.img:
+            if market_change.img:
                 if market_change.market_def.status != MarketStatus.CLOSED:
                     self._markets[market_id] = market_change
                 else:
@@ -33,7 +33,7 @@ class Cache:
             if hasattr(market_change, "market_def") and market_change.market_def.status == MarketStatus.CLOSED:
                 logging.info("Market %s has been closed and removed from cache.  Ignore" % market_id)
             else:
-                logging.warning("Market {} not in cache: {}".format(market_id, market_change))
+                logging.info("Market {} not in cache.  Ignore".format(market_id))
         else:
             market = self._markets[market_id]
             market.update(market_change)

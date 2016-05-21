@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import sleep
 from unittest import TestCase
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 
 from testfixtures import log_capture
 
@@ -11,7 +11,7 @@ from client.domain.request.marketfilter import MarketFilter
 
 class TestEsaClient(TestCase):
     def setUp(self):
-        self.client = EsaClient("", 8080, "", "", MarketFilter(), 50)
+        self.client = EsaClient(MagicMock(), MagicMock(), MarketFilter())
         conn = Mock()
         self.client._conn = conn
 

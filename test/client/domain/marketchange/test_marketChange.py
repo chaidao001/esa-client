@@ -34,9 +34,23 @@ class TestMarketChange(TestCase):
         self.assertEqual(len(market_change.rc), 1)
         self.assertEqual(market_change.rc[runner_id].spn, 6)
 
+    def test_init_imgNotInResponse_returnFalse(self):
+        market_change = TestMarketChange.create_market_change()
+
+        self.assertEqual(market_change.img, False)
+
+    def test_init_imgInResponse_returnTrue(self):
+        market_change = TestMarketChange.create_market_change_with_img()
+
+        self.assertEqual(market_change.img, True)
+
     @staticmethod
     def create_market_change():
         return MarketChange({"id": 5})
+
+    @staticmethod
+    def create_market_change_with_img():
+        return MarketChange({"id": 5, "img": True})
 
     @staticmethod
     def create_market_change_with_runner_change(runner_id):

@@ -11,6 +11,8 @@ class MarketChange:
             self._rc = dict()
         if "img" in response:
             self._img = response["img"]
+        else:
+            self._img = False
         if "marketDefinition" in response:
             self._market_definition = MarketDefinition(response["marketDefinition"])
         if "tv" in response:
