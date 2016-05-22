@@ -1,5 +1,3 @@
-from pkg_resources import iteritems
-
 from src.client.domain.request.request import Request
 
 
@@ -87,7 +85,7 @@ class Subscription(Request):
     def to_dict(self):
         result = {}
 
-        for attr, _ in iteritems(self.swagger_types):
+        for attr, _ in self.swagger_types.items():
             value = getattr(self, attr)
             key = self.attribute_map[attr]
             if value:

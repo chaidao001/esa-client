@@ -1,8 +1,4 @@
-from pkg_resources import iteritems
-
-
 class Request:
-
     def __init__(self):
         self._op = None
         self._id = None
@@ -36,7 +32,7 @@ class Request:
     def to_dict(self):
         result = {}
 
-        for attr, _ in iteritems(self.swagger_types):
+        for attr, _ in self.swagger_types.items():
             value = getattr(self, attr)
             key = self.attribute_map[attr]
             if value:

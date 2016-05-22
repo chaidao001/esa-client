@@ -16,10 +16,12 @@ from src.client.domain.response.connection import Connection
 from src.client.domain.response.marketchangemessage import MarketChangeMessage
 from src.client.domain.response.status import Status
 from src.client.utils.utils import serialise, format_json
+from utils.configs import Configs
+from utils.sessionmanager import SessionManager
 
 
 class EsaClient:
-    def __init__(self, configs, session_manager, market_filter: MarketFilter):
+    def __init__(self, configs: Configs, session_manager: SessionManager, market_filter: MarketFilter):
         esa_end_point = configs.esa_endpoint
         self._host = esa_end_point.host
         self._port = esa_end_point.port
