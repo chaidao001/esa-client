@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from client.domain.price.priceladder import PriceLadder
-from client.domain.price.pricevol import PriceVol
+from src.client.domain.price.priceladder import PriceLadder
+from src.client.domain.price.pricevol import PriceVol
 
 
 class TestPriceLadder(TestCase):
@@ -37,3 +37,8 @@ class TestPriceLadder(TestCase):
 
     def test_size_nonEmptyLadder_returnSize(self):
         self.assertEqual(self.price_ladder.size(), 2)
+
+    def test_get_price_at_position_returnPriceCorrectly(self):
+        price = self.price_ladder.get_price_at_position(0)
+
+        self.assertEqual(price, PriceVol([1, 2]))
