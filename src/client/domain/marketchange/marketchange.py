@@ -1,7 +1,7 @@
-from src.client.domain.marketchange.marketdefinition import MarketDefinition
-from src.client.domain.marketchange.runner import Runner
-from src.client.domain.marketchange.runnerchange import RunnerChange
-from src.client.utils.utils import format_value
+from client.domain.marketchange.marketdefinition import MarketDefinition
+from client.domain.marketchange.runner import Runner
+from client.domain.marketchange.runnerchange import RunnerChange
+from client.utils.utils import format_value
 
 
 class MarketChange:

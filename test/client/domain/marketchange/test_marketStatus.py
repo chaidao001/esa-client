@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src.client.domain.marketchange.marketstatus import MarketStatus
+from client.domain.marketchange.marketstatus import MarketStatus
 
 
 class TestMarketStatus(TestCase):

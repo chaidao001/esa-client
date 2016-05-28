@@ -1,4 +1,4 @@
-from src.client.domain.response import Response
+from client.domain.response import Response
 
 
 class Connection(Response):

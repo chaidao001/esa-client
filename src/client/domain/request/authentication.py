@@ -1,4 +1,4 @@
-from src.client.domain.request.request import Request
+from client.domain.request.request import Request
 
 
 class Authentication(Request):
