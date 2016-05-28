@@ -6,6 +6,9 @@ import threading
 from datetime import datetime
 from time import sleep
 
+from mind.src.utils.configs import Configs
+from mind.src.utils.sessionmanager import SessionManager
+
 from client.cache.cache import Cache
 from client.domain.request.authentication import Authentication
 from client.domain.request.heartbeat import Heartbeat
@@ -15,11 +18,11 @@ from client.domain.request.subscription import Subscription
 from client.domain.response.connection import Connection
 from client.domain.response.marketchangemessage import MarketChangeMessage
 from client.domain.response.status import Status
-from client.utils.utils import serialise, format_json
+from utils.utils import serialise, format_json
 
 
 class EsaClient:
-    def __init__(self, configs, session_manager, market_filter: MarketFilter):
+    def __init__(self, configs: Configs, session_manager: SessionManager, market_filter: MarketFilter):
         esa_end_point = configs.esa_endpoint
         self._host = esa_end_point.host
         self._port = esa_end_point.port
