@@ -167,6 +167,9 @@ class EsaClient:
                 logging.warning("Connection closed by server: %s" % response)
                 self._stop_recv_threads()
 
+            if response.status_code == 'FAILURE':
+                logging.warning("Status failure: %s" % response)
+
         elif op == "mcm":
             response = MarketChangeMessage(message)
 
@@ -205,7 +208,7 @@ class EsaClient:
             exit(1)
 
     def authenticate(self):
-        self._send_request(Authentication(self._app_key, self._session_manager.get_session()))
+        self._send_request(Authentication(self._app_key))
 
     def heartbeat(self):
         self._send_request(Heartbeat())
