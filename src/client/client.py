@@ -16,12 +16,10 @@ from client.domain.response.connection import Connection
 from client.domain.response.marketchangemessage import MarketChangeMessage
 from client.domain.response.status import Status
 from client.utils.utils import serialise, format_json
-from utils.configs import Configs
-from utils.sessionmanager import SessionManager
 
 
 class EsaClient:
-    def __init__(self, configs: Configs, session_manager: SessionManager, market_filter: MarketFilter):
+    def __init__(self, configs, session_manager, market_filter: MarketFilter):
         esa_end_point = configs.esa_endpoint
         self._host = esa_end_point.host
         self._port = esa_end_point.port
@@ -163,12 +161,12 @@ class EsaClient:
             response = Status(message)
             logging.debug("Received: %s", response)
 
+            if response.status_code == 'FAILURE':
+                logging.warning("Status failure: %s" % response)
+
             if response.connection_closed:
                 logging.warning("Connection closed by server: %s" % response)
                 self._stop_recv_threads()
-
-            if response.status_code == 'FAILURE':
-                logging.warning("Status failure: %s" % response)
 
         elif op == "mcm":
             response = MarketChangeMessage(message)
