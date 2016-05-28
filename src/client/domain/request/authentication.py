@@ -2,7 +2,7 @@ from src.client.domain.request.request import Request
 
 
 class Authentication(Request):
-    def __init__(self, app_key, session):
+    def __init__(self, app_key, session: str = None):
         super().__init__()
         self._op = "authentication"
         self._app_key = app_key
