@@ -208,7 +208,7 @@ class EsaClient:
             exit(1)
 
     def authenticate(self):
-        self._send_request(Authentication(self._app_key))
+        self._send_request(Authentication(self._app_key, self._session_manager.get_session()))
 
     def heartbeat(self):
         self._send_request(Heartbeat())
