@@ -1,4 +1,4 @@
-from client.domain.request.request import Request
+from .request import Request
 
 
 class Subscription(Request):

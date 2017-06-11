@@ -1,28 +1,27 @@
+import datetime
 import json
 import logging
 import socket
 import ssl
 import threading
-from datetime import datetime
-from time import sleep
+import time
 
-from mind.src.utils.configs import Configs
-from mind.src.utils.sessionmanager import SessionManager
-
-from client.cache.cache import Cache
-from client.domain.request.authentication import Authentication
-from client.domain.request.heartbeat import Heartbeat
-from client.domain.request.marketfilter import MarketFilter
-from client.domain.request.request import Request
-from client.domain.request.subscription import Subscription
-from client.domain.response.connection import Connection
-from client.domain.response.marketchangemessage import MarketChangeMessage
-from client.domain.response.status import Status
-from utils.utils import serialise, format_json
+from .cache.cache import Cache
+from .domain.request.authentication import Authentication
+from .domain.request.heartbeat import Heartbeat
+from .domain.request.marketfilter import MarketFilter
+from .domain.request.request import Request
+from .domain.request.subscription import Subscription
+from .domain.response.connection import Connection
+from .domain.response.marketchangemessage import MarketChangeMessage
+from .domain.response.status import Status
+from .utils import utils
+from .utils.configs import Configs
+from .utils.session_manager import SessionManager
 
 
 class EsaClient:
-    def __init__(self, configs: Configs, session_manager: SessionManager, market_filter: MarketFilter):
+    def __init__(self, configs: Configs, market_filter: MarketFilter):
         esa_end_point = configs.esa_endpoint
         self._host = esa_end_point.host
         self._port = esa_end_point.port
@@ -31,7 +30,7 @@ class EsaClient:
 
         self._heartbeat_interval_second = configs.esa_heartbeat_interval_second
 
-        self._session_manager = session_manager
+        self._session_manager = SessionManager(configs)
         self._market_filter = market_filter
 
         self._cache = Cache()
@@ -75,7 +74,7 @@ class EsaClient:
                 while self._conn and self._working:
                     self.heartbeat()
                     self._check_no_message_duration()
-                    sleep(self._heartbeat_interval_second)
+                    time.sleep(self._heartbeat_interval_second)
 
                 logging.info("Stopped sending")
 
@@ -86,10 +85,10 @@ class EsaClient:
 
                 self._stop_recv_threads()
                 while self._recv_thread.is_alive():
-                    sleep(1)
+                    time.sleep(1)
 
     def _check_no_message_duration(self):
-        no_message_duration = datetime.now() - self._last_receive_time
+        no_message_duration = datetime.datetime.now() - self._last_receive_time
         if no_message_duration.seconds > self._timeout_interval_second:
             logging.warning("Haven't received any message in %s" % no_message_duration)
 
@@ -148,16 +147,17 @@ class EsaClient:
 
     def _send_request(self, request: Request):
         if request:
-            message = serialise(request)
+            message = utils.serialise(request)
             logging.debug("Sending: %s", message)
             self._send(message)
 
     def _process_response(self, message: dict):
         op = message["op"]
-        self._last_receive_time = datetime.now()
+        self._last_receive_time = datetime.datetime.now()
 
         if op == "connection":
             response = Connection(message)
+            logging.debug("Received: %s", response)
             self._connection_id = response.connection_id
             logging.info("Connection has been established with ID %s", self._connection_id)
         elif op == "status":
@@ -173,6 +173,7 @@ class EsaClient:
 
         elif op == "mcm":
             response = MarketChangeMessage(message)
+            logging.debug("Received: %s", response)
 
             self._update_clk(response)
 
@@ -181,7 +182,6 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
-                # logging.debug(self._cache.formatted_string())
 
         else:
             logging.error("Unknown message received: %s" % message)
@@ -203,7 +203,7 @@ class EsaClient:
 
             # wait until connection is established
             while not self._connection_id:
-                sleep(1)
+                time.sleep(1)
         except socket.error as e:
             logging.error("Error when connecting: %s" % e)
             exit(1)
@@ -236,7 +236,7 @@ class EsaClient:
         logging.info("Terminated")
 
     def print_cache(self):
-        logging.info(format_json(self._cache))
+        logging.info(utils.format_json(self._cache))
 
     @property
     def cache(self):

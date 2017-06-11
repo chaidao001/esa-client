@@ -1,5 +1,5 @@
-from client.domain.marketchange.marketstatus import MarketStatus
-from client.domain.marketchange.runner import Runner
+from .marketstatus import MarketStatus
+from .runner import Runner
 
 
 class MarketDefinition:

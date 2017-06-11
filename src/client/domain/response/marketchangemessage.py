@@ -1,7 +1,7 @@
 from enum import Enum
 
-from client.domain.marketchange.marketchange import MarketChange
-from client.domain.response import Response
+from ..marketchange.marketchange import MarketChange
+from .response import Response
 
 
 class MarketChangeMessage(Response):

@@ -1,7 +1,8 @@
-from client.domain.marketchange.marketdefinition import MarketDefinition
-from client.domain.marketchange.runner import Runner
-from client.domain.marketchange.runnerchange import RunnerChange
-from utils.utils import format_value
+import src.client.utils.utils
+
+from .marketdefinition import MarketDefinition
+from .runner import Runner
+from .runnerchange import RunnerChange
 
 
 class MarketChange:
@@ -60,7 +61,8 @@ class MarketChange:
         market_def = self.market_def
         market_status = market_def.status
 
-        market_result = "Market {} (£{}) - {}\n".format(self.id, format_value(self.tv), market_status.name)
+        market_result = "Market {} (£{}) - {}\n".format(self.id, src.client.utils.utils.format_value(self.tv),
+                                                        market_status.name)
 
         for runner in market_def.runners:
             runner_id = runner.id
@@ -83,11 +85,14 @@ class MarketChange:
 
             bdatb_prices = back_price_vol_format.format(*[p.price for p in bdatb])
             bdatl_prices = lay_price_vol_format.format(*[p.price for p in bdatl])
-            bdatb_sizes = back_price_vol_format.format(*['£' + format_value(p.vol) for p in bdatb])
-            bdatl_sizes = lay_price_vol_format.format(*['£' + format_value(p.vol) for p in bdatl])
+            bdatb_sizes = back_price_vol_format.format(
+                *['£' + src.client.utils.utils.format_value(p.vol) for p in bdatb])
+            bdatl_sizes = lay_price_vol_format.format(
+                *['£' + src.client.utils.utils.format_value(p.vol) for p in bdatl])
 
             market_result += ladder_format.format("Runner " + str(runner_change.id), bdatb_prices, bdatl_prices)
-            market_result += ladder_format.format("£" + format_value(runner_change.tv), bdatb_sizes, bdatl_sizes)
+            market_result += ladder_format.format("£" + src.client.utils.utils.format_value(runner_change.tv),
+                                                  bdatb_sizes, bdatl_sizes)
 
         return market_result + '\n'
 

@@ -1,7 +1,7 @@
 import logging
 
-from client.domain.marketchange.marketchange import MarketChange
-from client.domain.marketchange.marketstatus import MarketStatus
+from ..domain.marketchange.marketchange import MarketChange
+from ..domain.marketchange.marketstatus import MarketStatus
 
 
 class Cache:
