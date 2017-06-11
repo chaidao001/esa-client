@@ -18,25 +18,20 @@ class Cache:
     def _process_market_img(self, market_change: MarketChange):
         market_id = market_change.id
 
-        if market_change.market_def.status != MarketStatus.CLOSED:
-            self._markets[market_id] = market_change
-        else:
+        if market_change.market_def.status == MarketStatus.CLOSED:
             # remove if full img and already in cache
             if market_id in self._markets:
                 logging.info("Market %s is closed.  Removing from cache" % market_id)
                 self._markets.pop(market_id)
             else:
-                logging.info("Market %s is closed.  Ignore" % market_id)
+                logging.info("Market %s is closed.  Ignore image" % market_id)
+        else:
+            self._markets[market_id] = market_change
 
     def _update_market(self, market_change: MarketChange):
         market_id = market_change.id
 
-        if market_id not in self._markets:
-            if hasattr(market_change, "market_def") and market_change.market_def.status == MarketStatus.CLOSED:
-                logging.info("Market %s has been closed and removed from cache.  Ignore" % market_id)
-            else:
-                logging.info("Market {} not in cache.  Ignore".format(market_id))
-        else:
+        if market_id in self._markets:
             market = self._markets[market_id]
             market.update(market_change)
 
@@ -44,6 +39,8 @@ class Cache:
             if market.market_def.status == MarketStatus.CLOSED:
                 logging.info("Market %s is closed.  Removing from cache" % market_id)
                 self._markets.pop(market_id)
+        else:
+            logging.info("Market %s not in cache.  Ignore" % market_id)
 
     @property
     def markets(self):

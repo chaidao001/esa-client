@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from client.cache.cache import Cache
-from client.domain.marketchange.marketchange import MarketChange
-from client.domain.marketchange.marketstatus import MarketStatus
+from src.client.cache.cache import Cache
+from src.client.domain.marketchange.marketchange import MarketChange
+from src.client.domain.marketchange.marketstatus import MarketStatus
 
 
 class TestCache(TestCase):
