@@ -15,7 +15,7 @@ class PriceLadder:
 
     @property
     def price_list(self):
-        return [self.ladder[position] for position in self.ladder]
+        return [self.ladder[position] for position in sorted(self.ladder)]
 
     def get_price_at_position(self, position):
         return self._ladder[position]

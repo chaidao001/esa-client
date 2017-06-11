@@ -30,6 +30,10 @@ class TestPriceLadder(TestCase):
     def test_price_list_nonEmptyLadder_returnNonEmptyList(self):
         self.assertEqual(self.price_ladder.price_list, [PriceVol([1, 2]), PriceVol([4, 5])])
 
+    def test_price_list_NotOrderedLadder_returnOrderedList(self):
+        self.price_ladder = PriceLadder([[0, 1, 2], [9, 10, 11], [3, 4, 5]])
+        self.assertEqual(self.price_ladder.price_list, [PriceVol([1, 2]), PriceVol([4, 5]), PriceVol([10, 11])])
+
     def test_size_emptyLadder_returnZero(self):
         self.price_ladder = PriceLadder(list())
 
