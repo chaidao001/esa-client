@@ -5,13 +5,13 @@ from unittest.mock import Mock, MagicMock
 
 from testfixtures import log_capture
 
-from client.client import EsaClient
-from client.domain.request.marketfilter import MarketFilter
+from src.client.client import EsaClient
+from src.client.domain.request.marketfilter import MarketFilter
 
 
 class TestEsaClient(TestCase):
     def setUp(self):
-        self.client = EsaClient(MagicMock(), MagicMock(), MarketFilter())
+        self.client = EsaClient(MagicMock(), MarketFilter())
         conn = Mock()
         self.client._conn = conn
 

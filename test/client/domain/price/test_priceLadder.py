@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from client.domain.price.priceladder import PriceLadder
-from client.domain.price.pricevol import PriceVol
+from src.client.domain.price.priceladder import PriceLadder
+from src.client.domain.price.pricevol import PriceVol
 
 
 class TestPriceLadder(TestCase):
