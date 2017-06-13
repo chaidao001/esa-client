@@ -1,7 +1,7 @@
 class Request:
     def __init__(self):
-        self._op = None
-        self._id = None
+        self.op = None
+        self.id = None
 
         self.swagger_types = {
             'op': 'str',
@@ -12,22 +12,6 @@ class Request:
             'op': 'op',
             'id': 'id'
         }
-
-    @property
-    def op(self):
-        return self._op
-
-    @op.setter
-    def op(self, op):
-        self._op = op
-
-    @property
-    def id(self):
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        self._id = id
 
     def to_dict(self):
         result = {}

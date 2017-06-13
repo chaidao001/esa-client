@@ -4,13 +4,13 @@ from .request import Request
 class Subscription(Request):
     def __init__(self):
         super().__init__()
-        self._op = "marketSubscription"
-        self._clk = None
-        self._heartbeat_ms = None
-        self._initial_clk = None
-        self._market_filter = None
-        self._conflate_ms = None
-        self._market_data_filter = None
+        self.op = "marketSubscription"
+        self.clk = None
+        self.heartbeat_ms = None
+        self.initial_clk = None
+        self.market_filter = None
+        self.conflate_ms = None
+        self.market_data_filter = None
 
         self.swagger_types = {
             'op': 'str',
@@ -33,54 +33,6 @@ class Subscription(Request):
             'id': 'id',
             'market_data_filter': 'marketDataFilter'
         }
-
-    @property
-    def clk(self):
-        return self._clk
-
-    @clk.setter
-    def clk(self, clk):
-        self._clk = clk
-
-    @property
-    def heartbeat_ms(self):
-        return self._heartbeat_ms
-
-    @heartbeat_ms.setter
-    def heartbeat_ms(self, heartbeat_ms):
-        self._heartbeat_ms = heartbeat_ms
-
-    @property
-    def initial_clk(self):
-        return self._initial_clk
-
-    @initial_clk.setter
-    def initial_clk(self, initial_clk):
-        self._initial_clk = initial_clk
-
-    @property
-    def market_filter(self):
-        return self._market_filter
-
-    @market_filter.setter
-    def market_filter(self, market_filter):
-        self._market_filter = market_filter
-
-    @property
-    def conflate_ms(self):
-        return self._conflate_ms
-
-    @conflate_ms.setter
-    def conflate_ms(self, conflate_ms):
-        self._conflate_ms = conflate_ms
-
-    @property
-    def market_data_filter(self):
-        return self._market_data_filter
-
-    @market_data_filter.setter
-    def market_data_filter(self, market_data_filter):
-        self._market_data_filter = market_data_filter
 
     def to_dict(self):
         result = {}

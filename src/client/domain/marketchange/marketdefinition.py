@@ -5,63 +5,55 @@ from .runner import Runner
 class MarketDefinition:
     def __init__(self, response):
         if "bspMarket" in response:
-            self._bsp_market = response["bspMarket"]
+            self.bsp_market = response["bspMarket"]
         if "timezone" in response:
-            self._timezone = response["timezone"]
+            self.timezone = response["timezone"]
         if "eventId" in response:
-            self._event_id = response["eventId"]
+            self.event_id = response["eventId"]
         if "suspendTime" in response:
-            self._suspend_time = response["suspendTime"]
+            self.suspend_time = response["suspendTime"]
         if "marketType" in response:
-            self._market_type = response["marketType"]
+            self.market_type = response["marketType"]
         if "crossMatching" in response:
-            self._cross_matching = response["crossMatching"]
+            self.cross_matching = response["crossMatching"]
         if "inPlay" in response:
-            self._in_play = response["inPlay"]
+            self.in_play = response["inPlay"]
         if "turnInPlayEnabled" in response:
-            self._turn_in_play_enabled = response["turnInPlayEnabled"]
+            self.turn_in_play_enabled = response["turnInPlayEnabled"]
         if "eventTypeId" in response:
-            self._event_type_id = response["eventTypeId"]
+            self.event_type_id = response["eventTypeId"]
         if "discountAllowed" in response:
-            self._discount_allowed = response["discountAllowed"]
+            self.discount_allowed = response["discountAllowed"]
         if "betDelay" in response:
-            self._bet_delay = response["betDelay"]
+            self.bet_delay = response["betDelay"]
         if "status" in response:
-            self._status = MarketStatus[response["status"]]
+            self.status = MarketStatus[response["status"]]
         if "numberOfWinners" in response:
-            self._number_of_winners = response["numberOfWinners"]
+            self.number_of_winners = response["numberOfWinners"]
         if "persistenceEnabled" in response:
-            self._persistence_enabled = response["persistenceEnabled"]
+            self.persistence_enabled = response["persistenceEnabled"]
         if "bspReconciled" in response:
-            self._bsp_reconciled = response["bspReconciled"]
+            self.bsp_reconciled = response["bspReconciled"]
         if "runners" in response:
-            self._runners = [Runner(runner) for runner in response["runners"]]
+            self.runners = [Runner(runner) for runner in response["runners"]]
         if "openDate" in response:
-            self._open_date = response["openDate"]
+            self.open_date = response["openDate"]
         if "countryCode" in response:
-            self._country_code = response["countryCode"]
+            self.country_code = response["countryCode"]
         if "runnersVoidable" in response:
-            self._runners_voidable = response["runnersVoidable"]
+            self.runners_voidable = response["runnersVoidable"]
         if "numberOfActiveRunners" in response:
-            self._number_of_active_runners = response["numberOfActiveRunners"]
+            self.number_of_active_runners = response["numberOfActiveRunners"]
         if "marketTime" in response:
-            self._market_time = response["marketTime"]
+            self.market_time = response["marketTime"]
         if "complete" in response:
-            self._complete = response["complete"]
+            self.complete = response["complete"]
         if "marketBaseRate" in response:
-            self._market_base_rate = response["marketBaseRate"]
+            self.market_base_rate = response["marketBaseRate"]
         if "version" in response:
-            self._version = response["version"]
+            self.version = response["version"]
         if "bettingType" in response:
-            self._betting_type = response["bettingType"]
-
-    @property
-    def runners(self):
-        return self._runners
-
-    @property
-    def status(self):
-        return self._status
+            self.betting_type = response["bettingType"]
 
     def __repr__(self):
         return str(vars(self))

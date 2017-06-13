@@ -4,9 +4,9 @@ from .request import Request
 class Authentication(Request):
     def __init__(self, app_key, session: str = None):
         super().__init__()
-        self._op = "authentication"
-        self._app_key = app_key
-        self._session = session
+        self.op = "authentication"
+        self.app_key = app_key
+        self.session = session
 
         self.swagger_types = {
             'op': 'str',
@@ -21,22 +21,6 @@ class Authentication(Request):
             'id': 'id',
             'session': 'session'
         }
-
-    @property
-    def app_key(self):
-        return self._app_key
-
-    @app_key.setter
-    def app_key(self, app_key):
-        self._app_key = app_key
-
-    @property
-    def session(self):
-        return self._session
-
-    @session.setter
-    def session(self, session):
-        self._session = session
 
     def to_dict(self):
         result = {}
