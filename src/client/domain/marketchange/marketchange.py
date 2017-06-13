@@ -6,23 +6,23 @@ from .runnerchange import RunnerChange
 
 class MarketChange:
     def __init__(self, response):
-        self._id = response["id"]
+        self.id = response["id"]
         if "rc" in response:
-            self._rc = {rc["id"]: RunnerChange(rc) for rc in response["rc"]}
+            self.rc = {rc["id"]: RunnerChange(rc) for rc in response["rc"]}
         else:
-            self._rc = dict()
+            self.rc = dict()
         if "img" in response:
-            self._img = response["img"]
+            self.img = response["img"]
         else:
-            self._img = False
+            self.img = False
         if "marketDefinition" in response:
-            self._market_definition = MarketDefinition(response["marketDefinition"])
+            self.market_definition = MarketDefinition(response["marketDefinition"])
         if "tv" in response:
-            self._tv = response["tv"]
+            self.tv = response["tv"]
 
     def update(self, market_change):
-        if hasattr(market_change, "market_def"):
-            self._market_definition = market_change.market_def
+        if hasattr(market_change, "market_definition"):
+            self.market_definition = market_change.market_definition
 
         for runner_id, runner_change in market_change.rc.items():
             if runner_id in self.rc:
@@ -31,39 +31,18 @@ class MarketChange:
                 self.rc[runner_id] = runner_change
 
         if hasattr(market_change, "tv"):
-            self._tv = market_change.tv
-
-    @property
-    def id(self):
-        return self._id
-
-    @property
-    def rc(self):
-        return self._rc
-
-    @property
-    def img(self):
-        return self._img
-
-    @property
-    def market_def(self):
-        return self._market_definition
-
-    @property
-    def tv(self):
-        return self._tv
+            self.tv = market_change.tv
 
     def formatted_string(self):
 
         ladder_format = '{:<15} {:<50} {:>50}\n'
 
-        market_def = self.market_def
-        market_status = market_def.status
+        market_status = self.market_definition.status
 
         market_result = "Market {} (£{}) - {}\n".format(self.id, src.client.utils.utils.format_value(self.tv),
                                                         market_status.name)
 
-        for runner in market_def.runners:
+        for runner in self.market_definition.runners:
             runner_id = runner.id
 
             if runner_id not in self.rc:
