@@ -54,5 +54,11 @@ class Cache:
         if market_id in self._markets:
             return self._markets[market_id]
 
+    def __iter__(self):
+        return self._markets
+
+    def __len__(self):
+        return len(self._markets)
+
     def __repr__(self):
         return str(vars(self))
