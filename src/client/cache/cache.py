@@ -3,6 +3,7 @@ import logging
 from ..domain.marketchange.marketchange import MarketChange
 from ..domain.marketchange.marketstatus import MarketStatus
 
+market_logger = logging.getLogger('marketData')
 
 class Cache:
     def __init__(self):
@@ -14,6 +15,10 @@ class Cache:
                 self._process_market_img(market_change)
             else:
                 self._update_market(market_change)
+
+            market_id = market_change.id
+            if market_id in self._markets:
+                market_logger.info(self._markets[market_id])
 
     def _process_market_img(self, market_change: MarketChange):
         market_id = market_change.id
