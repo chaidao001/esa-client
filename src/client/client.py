@@ -183,7 +183,7 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
-                self._log_market_message(message)
+                self._log_market_changes(message)
 
         else:
             logging.error("Unknown message received: %s" % message)
@@ -194,9 +194,10 @@ class EsaClient:
         if hasattr(response, "clk"):
             self._clk = response.clk
 
-    def _log_market_message(self, message):
-        json_message = json.dumps(message, separators=(',', ':'))
-        market_message_logger.info(json_message)
+    def _log_market_changes(self, message):
+        for market_change in message["mc"]:
+            json_message = json.dumps(market_change, separators=(',', ':'))
+            market_message_logger.info("%s,%s,%s", message["pt"], market_change["id"], json_message)
 
     # Esa commands:
     def connect(self):
