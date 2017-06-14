@@ -11,4 +11,4 @@ class Runner:
         return str(vars(self))
 
     class RunnerStatus(Enum):
-        ACTIVE, WINNER, LOSER, REMOVED_VACANT, REMOVED, HIDDEN = range(6)
+        ACTIVE, WINNER, LOSER, PLACED, REMOVED_VACANT, REMOVED, HIDDEN = range(7)
