@@ -19,6 +19,7 @@ from .utils import utils
 from .utils.configs import Configs
 from .utils.session_manager import SessionManager
 
+market_message_logger = logging.getLogger("marketMessage")
 
 class EsaClient:
     def __init__(self, configs: Configs, market_filter: MarketFilter):
@@ -182,6 +183,7 @@ class EsaClient:
 
             if hasattr(response, "mc"):
                 self._cache.on_receive(response.mc)
+                self._log_market_message(message)
 
         else:
             logging.error("Unknown message received: %s" % message)
@@ -191,6 +193,10 @@ class EsaClient:
             self._initial_clk = response.initial_clk
         if hasattr(response, "clk"):
             self._clk = response.clk
+
+    def _log_market_message(self, message):
+        json_message = json.dumps(message, separators=(',', ':'))
+        market_message_logger.info(json_message)
 
     # Esa commands:
     def connect(self):
