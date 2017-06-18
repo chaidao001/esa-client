@@ -21,10 +21,10 @@ class Cache:
         if market_change.market_definition.status == MarketStatus.CLOSED:
             # remove if full img and already in cache
             if market_id in self.markets:
-                logging.info("Market %s is closed.  Removing from cache" % market_id)
+                logging.debug("Market %s is closed.  Removing from cache" % market_id)
                 self.markets.pop(market_id)
             else:
-                logging.info("Market %s is closed.  Ignore image" % market_id)
+                logging.debug("Market %s is closed.  Ignore image" % market_id)
         else:
             self.markets[market_id] = market_change
 
@@ -37,10 +37,10 @@ class Cache:
 
             # remove market from cache if closed
             if market.market_definition.status == MarketStatus.CLOSED:
-                logging.info("Market %s is closed.  Removing from cache" % market_id)
+                logging.debug("Market %s is closed.  Removing from cache" % market_id)
                 self.markets.pop(market_id)
         else:
-            logging.info("Market %s not in cache.  Ignore" % market_id)
+            logging.debug("Market %s not in cache.  Ignore" % market_id)
 
     @property
     def market_ids(self):
