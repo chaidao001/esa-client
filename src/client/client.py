@@ -197,7 +197,8 @@ class EsaClient:
     def _log_market_changes(self, message):
         for market_change in message["mc"]:
             json_message = json.dumps(market_change, separators=(',', ':'))
-            market_message_logger.info("%s,%s,%s", message["pt"], market_change["id"], json_message)
+            json_message = json_message.replace('"', '""')
+            market_message_logger.info('%s,%s,"%s"', message["pt"], market_change["id"], json_message)
 
     # Esa commands:
     def connect(self):
